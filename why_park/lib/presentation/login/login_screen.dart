@@ -23,7 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
     final mediaQueryWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Colors.black,
       resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.all(31.0),
@@ -41,30 +40,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextFormField(
                         onChanged: (value) => widget._loginPresenter
                             .add(LoginFieldsChangedEvent("email", value)),
-                        style: const TextStyle(color: Colors.white),
                         decoration: const InputDecoration(
-                            labelText: 'E-mail',
-                            labelStyle: TextStyle(color: Colors.white),
-                            filled: true,
-                            fillColor: Color(0xFF262626)),
+                          labelText: 'E-mail',
+                          filled: true,
+                        ),
                       ),
                       SizedBox(height: mediaQueryHeight * 0.03),
                       TextFormField(
                         onChanged: (value) => widget._loginPresenter
                             .add(LoginFieldsChangedEvent("password", value)),
-                        style: const TextStyle(color: Colors.white),
                         obscureText: !_passwordIsVisible,
                         decoration: InputDecoration(
                           labelText: 'Senha',
-                          labelStyle: const TextStyle(color: Colors.white),
-                          fillColor: const Color(0xFF262626),
                           filled: true,
                           suffixIcon: IconButton(
                             icon: Icon(
                               _passwordIsVisible
                                   ? Icons.visibility
                                   : Icons.visibility_off,
-                              color: const Color(0xFF5E5CE5),
                             ),
                             onPressed: () {
                               setState(() {
@@ -80,12 +73,11 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: mediaQueryHeight * 0.01),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: const [
+              children: [
                 TextButton(
-                  onPressed: null,
-                  child: Text(
+                  onPressed: () => print('teste'),
+                  child: const Text(
                     'Esqueci minha senha',
-                    style: TextStyle(color: Colors.white),
                   ),
                 )
               ],
@@ -94,48 +86,45 @@ class _LoginScreenState extends State<LoginScreen> {
             OutlinedButton(
               onPressed: () =>
                   Navigator.of(context).pushNamed(RoutesTable.home),
-              style: OutlinedButton.styleFrom(
-                  backgroundColor: const Color(0xFF5E5CE5)),
               child: const Text(
                 'Entrar',
-                style: TextStyle(color: Colors.white),
               ),
             ),
             SizedBox(height: mediaQueryHeight * 0.03),
             Row(children: [
               const Expanded(
                   child: Divider(
-                color: Color(0xFF959595),
                 thickness: 1.0,
               )),
               SizedBox(width: mediaQueryWidth * 0.02),
               const Text(
                 'ou',
-                style: TextStyle(color: Colors.white),
               ),
               SizedBox(width: mediaQueryWidth * 0.02),
               const Expanded(
                   child: Divider(
-                color: Color(0xFF959595),
                 thickness: 1.0,
               ))
             ]),
             SizedBox(height: mediaQueryHeight * 0.03),
-            OutlinedButton(
+            const OutlinedButton(
               onPressed: null,
-              style: OutlinedButton.styleFrom(
-                  backgroundColor: const Color(0xFF5E5CE5)),
-              child: const Text(
+              child: Text(
                 'Entrar com a conta google',
-                style: TextStyle(color: Colors.white),
               ),
             ),
             SizedBox(height: mediaQueryHeight * 0.03),
-            TextButton(
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(RoutesTable.signup),
-                child: const Text('Não tem uma conta? Cadastre-se',
-                    style: TextStyle(color: Colors.white))),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Não tem uma conta?'),
+                TextButton(
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed(RoutesTable.signup),
+                  child: const Text('Cadastre-se'),
+                ),
+              ],
+            )
           ],
         ),
       ),
