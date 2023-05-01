@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:why_park/presentation/home/menu_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,25 +18,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Bem-vindo!',
-      style: TextStyle(color: Colors.white),
-    ),
-    Text(
-      'Seus veículos aqui',
-      style: TextStyle(color: Colors.white),
-    ),
-    Text(
-      'Suas reservas recentes',
-      style: TextStyle(color: Colors.white),
-    ),
+    Text('Bem-vindo!'),
+    Text('Seus veículos aqui'),
+    Text('Suas reservas recentes'),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(),
+      drawer: const MenuDrawer(),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -55,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xFF5E5CE5),
         onTap: _onItemTapped,
       ),
     );
