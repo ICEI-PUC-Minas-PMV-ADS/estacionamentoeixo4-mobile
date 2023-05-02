@@ -12,6 +12,18 @@ class Styles {
           backgroundColor: isDarkTheme ? Colors.black : Colors.white,
         ),
         textTheme: TextTheme(
+            headlineLarge:
+            TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
+            headlineMedium:
+            TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
+            headlineSmall:
+            TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
+            titleLarge:
+            TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
+            titleMedium:
+            TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
+            titleSmall:
+            TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
             bodyLarge:
                 TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
             bodyMedium:
@@ -32,7 +44,9 @@ class Styles {
                 TextStyle(color: isDarkTheme ? Colors.white : Colors.black)),
         primaryColor: isDarkTheme ? Colors.white : Colors.black,
         hintColor: isDarkTheme ? Colors.white : Colors.black,
-        cardColor: isDarkTheme ? const Color(0xFF151515) : Colors.white,
+        inputDecorationTheme: InputDecorationTheme(
+            labelStyle:
+                TextStyle(color: isDarkTheme ? Colors.white : Colors.black)),
         dividerColor: isDarkTheme ? Colors.white : Colors.black,
         iconButtonTheme: const IconButtonThemeData(
             style: ButtonStyle(
