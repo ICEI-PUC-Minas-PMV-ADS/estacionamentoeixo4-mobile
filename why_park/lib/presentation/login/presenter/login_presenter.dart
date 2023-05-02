@@ -22,6 +22,8 @@ class LoginPresenter extends Bloc<LoginEvent, LoginState> {
   }
 
   _onLoginSubmitted(final _, final Emitter<LoginState> emit) {
+    print(state.email);
+    print(state.password);
     // TODO: chamar o serviço de Login
   }
 }

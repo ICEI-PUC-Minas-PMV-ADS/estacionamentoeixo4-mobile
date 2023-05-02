@@ -27,6 +27,10 @@ class SignupPresenter extends Bloc<SignupEvent, SignupState> {
   }
 
   _onSignupSubmitted(final _, final Emitter<SignupState> emit) {
+    print(state.email);
+    print(state.name);
+    print(state.password);
+    print(state.confirmPassword);
     // TODO: chamar o serviço de Signup
   }
 }
