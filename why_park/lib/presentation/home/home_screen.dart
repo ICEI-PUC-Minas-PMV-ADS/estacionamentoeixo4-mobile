@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:why_park/presentation/home/menu_drawer.dart';
+import 'package:why_park/presentation/home/park_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Text('Bem-vindo!'),
+    ParkScreen(),
     Text('Seus veículos aqui'),
     Text('Suas reservas recentes'),
   ];
