@@ -4,6 +4,7 @@ import 'package:why_park/presentation/home/home_screen.dart';
 import 'package:why_park/presentation/login/login_screen.dart';
 import 'package:why_park/presentation/login/presenter/login_presenter.dart';
 import 'package:why_park/presentation/signup/presenter/signup_presenter.dart';
+import 'package:why_park/presentation/vehicle/vehicle_registration_screen.dart';
 
 import '../presentation/signup/signup_screen.dart';
 
@@ -27,6 +28,9 @@ class ApplicationCompositionRoot {
   @nonVirtual
   Widget newHomeScreen() => createHomeScreen();
 
+  @nonVirtual
+  Widget newVehicleRegistrationScreen() => createVehicleRegistrationScreen();
+
   // Factories
   @protected
   Widget createLoginScreen() => LoginScreen(
@@ -42,6 +46,10 @@ class ApplicationCompositionRoot {
 
   @protected
   Widget createHomeScreen() => const HomeScreen();
+
+  @protected
+  Widget createVehicleRegistrationScreen() =>
+      const VehicleRegistrationScreen(null);
 
   @protected
   LoginPresenter createLoginPresenter() => LoginPresenter();

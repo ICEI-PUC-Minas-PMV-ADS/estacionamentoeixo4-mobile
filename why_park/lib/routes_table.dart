@@ -11,11 +11,14 @@ class RoutesTable {
   static const login = '/login';
   static const signup = '/signup';
   static const home = '/home';
+  static const vehicle = '/vehicle';
 
   // routes mapper
   static Map<String, Widget Function(BuildContext)> routes = {
     login: (final context) => _applicationCompositionRoot.newLoginScreen(),
     signup: (final context) => _applicationCompositionRoot.newSignupScreen(),
     home: (final context) => _applicationCompositionRoot.newHomeScreen(),
+    vehicle: (final context) =>
+        _applicationCompositionRoot.newVehicleRegistrationScreen(),
   };
 }

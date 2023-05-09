@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:why_park/presentation/vehicle/dumb_widgets/vehicle_card.dart';
+import '../../routes_table.dart';
 import 'model/vehicle_view_model.dart';
 
 class VehicleListScreen extends StatelessWidget {
@@ -12,8 +13,6 @@ class VehicleListScreen extends StatelessWidget {
     final List<VehicleViewModel> list = [
       VehicleViewModel(VehicleType.car, "PLZ-2345", "Honda City"),
       VehicleViewModel(VehicleType.bike, "PXJ-2320", "yamaha R1"),
-      VehicleViewModel(VehicleType.car, "PXJ-2320", "Honda City"),
-      VehicleViewModel(VehicleType.car, "PXJ-2320", "Honda City")
     ];
 
     return Scaffold(
@@ -28,6 +27,12 @@ class VehicleListScreen extends StatelessWidget {
                 Divider(
                   color: Colors.transparent,
                 )),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(RoutesTable.vehicle);
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
