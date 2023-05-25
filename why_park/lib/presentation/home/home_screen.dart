@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:why_park/commons/commons_theme/theme_provider.dart';
 import 'package:why_park/presentation/home/menu_drawer.dart';
-import 'package:why_park/presentation/home/park_screen.dart';
+import 'package:why_park/presentation/park/park_presenter/park_presenter.dart';
+import 'package:why_park/presentation/park/park_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen(final Key? key, this._parkPresenter) : super(key: key);
+
+  final ParkPresenter _parkPresenter;
 
   @override
   State<StatefulWidget> createState() => _HomeScreenState();
@@ -18,11 +22,20 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    ParkScreen(),
-    Text('Seus veículos aqui'),
-    Text('Suas reservas recentes'),
-  ];
+  late final List<Widget> _widgetOptions;
+
+  @override
+  void initState() {
+    _widgetOptions = [
+      ParkScreen(null, widget._parkPresenter),
+      const Text('Seus veículos aqui'),
+      const Text('Suas reservas recentes'),
+    ];
+
+    super.initState();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
