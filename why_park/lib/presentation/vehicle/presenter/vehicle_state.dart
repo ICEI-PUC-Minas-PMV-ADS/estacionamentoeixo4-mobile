@@ -1,41 +1,32 @@
-import 'dart:ffi';
-
 import 'package:equatable/equatable.dart';
+
+import '../model/vehicle_view_model.dart';
 
 enum Status { initial, valid, invalid, loading, success, failure }
 
 class VehicleState extends Equatable {
   const VehicleState({
-    this.type = '',
-    this.licensePlate = '',
-    this.model = '',
+    this.usersVehicles = const [],
     this.hasSpecialNeeds = false,
     this.status = Status.initial,
   });
 
-  final String type;
-  final String licensePlate;
-  final String model;
+  final List<VehicleViewModel> usersVehicles;
   final bool hasSpecialNeeds;
   final Status status;
 
   VehicleState copyWith({
-    String? type,
-    String? licensePlate,
-    String? model,
+    List<VehicleViewModel>? usersVehicles,
     bool? hasSpecialNeeds,
     Status? status,
   }) {
     return VehicleState(
-      type: type ?? this.type,
-      licensePlate: licensePlate ?? this.licensePlate,
-      model: model ?? this.model,
+      usersVehicles: usersVehicles ?? this.usersVehicles,
       hasSpecialNeeds: hasSpecialNeeds ?? this.hasSpecialNeeds,
       status: status ?? this.status,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [type, licensePlate, model, hasSpecialNeeds, status];
+  List<Object?> get props => [usersVehicles, hasSpecialNeeds, status];
 }
