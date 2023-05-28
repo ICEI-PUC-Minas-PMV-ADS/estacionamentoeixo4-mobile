@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:why_park/application/park/model/park_model.dart';
+import 'package:why_park/application/park/park_query_application_service.dart';
 import 'package:why_park/presentation/park/park_presenter/park_events.dart';
 import 'package:why_park/presentation/park/park_presenter/park_state.dart';
 import 'package:why_park/presentation/park/view_model/park_view_model.dart';
@@ -11,13 +12,15 @@ import '../../../commons/commons_geolocator/user_geolocator_provider.dart';
 import '../../../commons/commons_theme/theme_provider.dart';
 
 class ParkPresenter extends Bloc<ParkEvents, ParkState> {
-  ParkPresenter() : super(const ParkState()) {
+  ParkPresenter(this._applicationService) : super(const ParkState()) {
     on<GetPositionEvent>(_onDeterminePosition);
     on<GetNearestParks>(_onGetNearestParks);
     on<SearchParkByAddressEvent>(_findParks);
   }
 
   static const int _toKilometersDivisor = 1000;
+
+  final ParkQueryApplicationService _applicationService;
 
   Future<void> _onDeterminePosition(
     final GetPositionEvent event,

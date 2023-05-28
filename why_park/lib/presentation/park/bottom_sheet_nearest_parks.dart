@@ -7,7 +7,7 @@ import 'package:why_park/presentation/park/park_presenter/park_state.dart';
 import 'package:why_park/routes_table.dart';
 
 class BottomSheetNearestParks extends StatefulWidget {
-  const BottomSheetNearestParks(Key? key, this._presenter) : super(key: key);
+  const BottomSheetNearestParks(this._presenter, [Key? key]) : super(key: key);
 
   final ParkPresenter _presenter;
 
@@ -50,7 +50,7 @@ class _BottomSheetNearestParksState extends State<BottomSheetNearestParks> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 10.0),
+                padding: const EdgeInsets.only(bottom: 10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [

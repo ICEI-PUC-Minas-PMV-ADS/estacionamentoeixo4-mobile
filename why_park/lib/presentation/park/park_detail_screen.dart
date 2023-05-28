@@ -11,7 +11,7 @@ import 'package:why_park/presentation/park/park_detail_presenter/park_detail_sta
 import 'package:why_park/presentation/park/park_detail_screen_arguments.dart';
 
 class ParkDetailScreen extends StatefulWidget {
-  const ParkDetailScreen(Key? key, this._presenter, this._arguments)
+  const ParkDetailScreen(this._presenter, this._arguments, [Key? key])
       : super(key: key);
 
   final ParkDetailPresenter _presenter;
@@ -133,7 +133,8 @@ class _ParkDetailScreenState extends State<ParkDetailScreen> {
               showModalBottomSheet<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  return BottomSheetParkDetail(null, widget._presenter, widget._arguments.viewModel);
+                  return BottomSheetParkDetail(
+                      widget._presenter, widget._arguments.viewModel);
                 },
               );
             },

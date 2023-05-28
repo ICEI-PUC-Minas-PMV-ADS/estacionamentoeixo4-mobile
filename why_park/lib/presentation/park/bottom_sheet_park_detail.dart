@@ -5,7 +5,7 @@ import 'package:why_park/presentation/park/park_detail_presenter/park_detail_sta
 import 'package:why_park/presentation/park/view_model/park_view_model.dart';
 
 class BottomSheetParkDetail extends StatefulWidget {
-  const BottomSheetParkDetail(Key? key, this._presenter, this._parkViewModel)
+  const BottomSheetParkDetail(this._presenter, this._parkViewModel, [Key? key])
       : super(key: key);
 
   final ParkDetailPresenter _presenter;
@@ -35,7 +35,9 @@ class _BottomSheetParkDetailState extends State<BottomSheetParkDetail> {
                   ),
                   child: Image.asset('assets/images/park.png'),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
@@ -55,17 +57,20 @@ class _BottomSheetParkDetailState extends State<BottomSheetParkDetail> {
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Vagas totais disponíveis: '),
+                                  const Text('Vagas totais disponíveis: '),
                                   Text(widget._parkViewModel.vacancies
                                       .toString())
                                 ],
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Vagas preferenciais disponíveis: '),
+                                  const Text(
+                                      'Vagas preferenciais disponíveis: '),
                                   Text(widget._parkViewModel.priorityVacancies
                                       .toString())
                                 ],
@@ -75,14 +80,14 @@ class _BottomSheetParkDetailState extends State<BottomSheetParkDetail> {
                         ),
                       ),
                       OutlinedButton(
-                        style: ButtonStyle(
+                        style: const ButtonStyle(
                             backgroundColor: MaterialStatePropertyAll<Color>(
                                 Color(0xFFF27D16))),
                         onPressed: null,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
+                          children: const [
+                            Text(
                               'Prosseguir com a reserva',
                             ),
                           ],

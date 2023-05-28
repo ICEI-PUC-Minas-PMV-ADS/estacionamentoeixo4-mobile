@@ -12,7 +12,7 @@ class ImageBox extends StatelessWidget {
       width: 120,
       height: 120,
       decoration: BoxDecoration(
-        color: isSelected ? Color(0xFF262626) : Color(0xFF000000),
+        color: isSelected ? Color(0xFF262626) : Colors.transparent,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Image.asset(

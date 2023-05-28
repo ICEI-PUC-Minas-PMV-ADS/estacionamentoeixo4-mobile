@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:why_park/presentation/vehicle/presenter/vehicle_presenter.dart';
 import 'dumb_widgets/image_box.dart';
 
 enum Preferential { yes, no }
 
 class VehicleRegistrationScreen extends StatefulWidget {
-  const VehicleRegistrationScreen(final Key? key) : super(key: key);
+  const VehicleRegistrationScreen(this._presenter, [final Key? key])
+      : super(key: key);
+
+  final VehiclePresenter _presenter;
 
   @override
   State<StatefulWidget> createState() => _VehicleRegistrationState();
@@ -61,31 +65,25 @@ class _VehicleRegistrationState extends State<VehicleRegistrationScreen> {
                 height: 60,
               ),
               TextFormField(
-                onChanged: (value) => print(value),
-                // onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
-                decoration: InputDecoration(
-                    hintText: 'Placa',
-                    hintStyle: const TextStyle(color: Color(0xFF959595)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none),
-                    filled: true,
-                    fillColor: const Color(0xFF262626)),
+                //focusNode: _emailFocusNode,
+                onChanged: (value) => null,
+                onFieldSubmitted: (_) => null,
+                decoration: const InputDecoration(
+                  labelText: 'Placa',
+                  filled: true,
+                ),
               ),
               const SizedBox(
                 height: 20,
               ),
               TextFormField(
-                onChanged: (value) => print(value),
-                // onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
-                decoration: InputDecoration(
-                    hintText: 'Modelo',
-                    hintStyle: const TextStyle(color: Color(0xFF959595)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none),
-                    filled: true,
-                    fillColor: const Color(0xFF262626)),
+                //focusNode: _emailFocusNode,
+                onChanged: (value) => null,
+                onFieldSubmitted: (_) => null,
+                decoration: const InputDecoration(
+                  labelText: 'Modelo',
+                  filled: true,
+                ),
               ),
               const SizedBox(
                 height: 50,

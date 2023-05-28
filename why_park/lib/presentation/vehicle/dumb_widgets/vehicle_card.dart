@@ -15,15 +15,10 @@ class VehicleCard extends StatelessWidget {
     final mediaQueryWidth = MediaQuery.of(context).size.width;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
-    return Container(
-      height: 100,
-      decoration: BoxDecoration(
-        color: Color(0xFF474545),
-        borderRadius: BorderRadius.circular(10),
-      ),
+    return Card(
       child: InkWell(
         child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          SizedBox(
+          const SizedBox(
             width: 20,
           ),
           Image.asset(
@@ -33,7 +28,7 @@ class VehicleCard extends StatelessWidget {
             height: mediaQueryHeight * 0.25,
             width: 90,
           ),
-          SizedBox(
+          const SizedBox(
             width: 40,
           ),
           Column(
@@ -42,7 +37,7 @@ class VehicleCard extends StatelessWidget {
             children: [
               Text(
                 "Modelo: ${_vehicleViewModel.model}",
-                style: TextStyle(fontSize: 15),
+                style: const TextStyle(fontSize: 15),
               ),
               Text("Placa: ${_vehicleViewModel.licensePlate}")
             ],

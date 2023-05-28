@@ -5,7 +5,7 @@ import 'package:why_park/presentation/park/park_screen.dart';
 import 'package:why_park/presentation/vehicle/vehicle_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen(final Key? key, this._parkPresenter) : super(key: key);
+  const HomeScreen(this._parkPresenter, [final Key? key]) : super(key: key);
 
   final ParkPresenter _parkPresenter;
 
@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _widgetOptions = [
-      ParkScreen(null, widget._parkPresenter),
+      ParkScreen(widget._parkPresenter),
       VehicleListScreen(),
       const Text('Suas reservas recentes'),
     ];
