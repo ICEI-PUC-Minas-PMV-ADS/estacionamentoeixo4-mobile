@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:why_park/commons/commons_theme/theme_provider.dart';
 import 'package:why_park/presentation/home/menu_drawer.dart';
 import 'package:why_park/presentation/park/park_presenter/park_presenter.dart';
 import 'package:why_park/presentation/park/park_screen.dart';
@@ -23,18 +22,13 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  static List<Widget> _widgetOptions = <Widget>[
-    Text('Bem-vindo!'),
-    VehicleListScreen(),
-    Text('Suas reservas recentes'),
-  ];
   late final List<Widget> _widgetOptions;
 
   @override
   void initState() {
     _widgetOptions = [
       ParkScreen(null, widget._parkPresenter),
-      const Text('Seus veículos aqui'),
+      VehicleListScreen(),
       const Text('Suas reservas recentes'),
     ];
 
