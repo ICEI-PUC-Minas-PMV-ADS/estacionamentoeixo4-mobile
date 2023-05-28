@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:why_park/commons/commons_geolocator/user_geolocator_provider.dart';
 import 'package:why_park/routes_table.dart';
 
 import 'commons/commons_theme/theme_data.dart';
@@ -27,11 +30,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   DarkThemeProvider themeChangeProvider = DarkThemeProvider();
+  UserGeolocatorProvider userGeolocatorProvider = UserGeolocatorProvider();
 
   @override
   void initState() {
     getCurrentAppTheme();
     super.initState();
+  }
+
+  setInitialPosition() async {
+    Position position = await Geolocator.getCurrentPosition();
+    userGeolocatorProvider.location =
+        LatLng(position.latitude, position.latitude);
   }
 
   void getCurrentAppTheme() async {

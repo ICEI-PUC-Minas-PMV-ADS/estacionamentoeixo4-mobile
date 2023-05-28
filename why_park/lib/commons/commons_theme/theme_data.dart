@@ -13,17 +13,17 @@ class Styles {
         ),
         textTheme: TextTheme(
             headlineLarge:
-            TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
+                TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
             headlineMedium:
-            TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
+                TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
             headlineSmall:
-            TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
+                TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
             titleLarge:
-            TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
+                TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
             titleMedium:
-            TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
+                TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
             titleSmall:
-            TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
+                TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
             bodyLarge:
                 TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
             bodyMedium:
@@ -63,6 +63,31 @@ class Styles {
           ),
         ),
         iconTheme:
-            IconThemeData(color: isDarkTheme ? Colors.white : Colors.black));
+            IconThemeData(color: isDarkTheme ? Colors.white : Colors.black),
+        bottomSheetTheme: BottomSheetThemeData(
+          backgroundColor: isDarkTheme ? Colors.deepPurple : Colors.white,
+          shape: const RoundedRectangleBorder(
+            // <-- SEE HERE
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(30.0),
+            ),
+          ),
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            backgroundColor: isDarkTheme ? Colors.black : Colors.white,
+            unselectedIconTheme:
+                IconThemeData(color: isDarkTheme ? Colors.white : Colors.black),
+            unselectedLabelStyle:
+                TextStyle(color: isDarkTheme ? Colors.white : Colors.black),
+            unselectedItemColor: isDarkTheme ? Colors.white : Colors.black),
+        cardTheme: CardTheme(
+          color: isDarkTheme ? Colors.black : Colors.white70,
+          shape: const RoundedRectangleBorder(
+            // <-- SEE HERE
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(30.0),
+            ),
+          ),
+        ));
   }
 }

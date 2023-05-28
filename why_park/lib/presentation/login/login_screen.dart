@@ -41,8 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
           reverse: true,
           child: Column(
             children: [
-              SizedBox(height: mediaQueryHeight * 0.03),
-              Image.asset('assets/images/logo.png',
+              SizedBox(height: mediaQueryHeight * 0.04),
+              Image.asset('assets/images/why_park.png',
                   height: mediaQueryHeight * 0.25,
                   width: mediaQueryWidth * 0.70),
               SizedBox(height: mediaQueryHeight * 0.03),

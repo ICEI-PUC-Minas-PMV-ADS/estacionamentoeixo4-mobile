@@ -1,15 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:why_park/application/account/user_registry_application_service.dart';
+import 'package:why_park/application/park/park_detail_application_service.dart';
 import 'package:why_park/edge/converters/user_account_model_to_resource_converter.dart';
 import 'package:why_park/edge/http/custom_http_client.dart';
 import 'package:why_park/edge/http/dio_http_client.dart';
+import 'package:why_park/edge/services/park_detail_application_service_remote_adapter.dart';
 import 'package:why_park/edge/services/user_registry_application_service_remote_adapter.dart';
 import 'package:why_park/presentation/home/home_screen.dart';
 import 'package:why_park/presentation/login/login_screen.dart';
 import 'package:why_park/presentation/login/presenter/login_presenter.dart';
+import 'package:why_park/presentation/park/park_detail_presenter/park_detail_presenter.dart';
+import 'package:why_park/presentation/park/park_detail_screen.dart';
+import 'package:why_park/presentation/park/park_presenter/park_presenter.dart';
 import 'package:why_park/presentation/signup/presenter/signup_presenter.dart';
 
+import '../presentation/park/park_detail_screen_arguments.dart';
 import '../presentation/signup/signup_screen.dart';
 
 class ApplicationCompositionRoot {
@@ -19,6 +25,7 @@ class ApplicationCompositionRoot {
     _accountModelToResourceConverter =
         createUserAccountModelToResourceConverter();
     _userRegistryApplicationService = createUserRegistryApplicationService();
+    _parkDetailApplicationService = createParkDetailApplicationService();
   }
 
   factory ApplicationCompositionRoot.instance() => _me;
@@ -31,6 +38,7 @@ class ApplicationCompositionRoot {
   late final UserAccountModelToResourceConverter
       _accountModelToResourceConverter;
   late final UserRegistryApplicationService _userRegistryApplicationService;
+  late final ParkDetailApplicationService _parkDetailApplicationService;
 
   // Injectable Properties
   // ex: services, converters, remoteGateways
@@ -47,6 +55,10 @@ class ApplicationCompositionRoot {
   @nonVirtual
   Widget newHomeScreen() => createHomeScreen();
 
+  @nonVirtual
+  newParkDetailScreen(final ParkDetailScreenArguments arguments) =>
+      createParkDetailScreen(arguments);
+
   // Factories
   @protected
   CustomHttpClient createCustomHttpClient() => DioHttpClient(urlBase: _baseUrl);
@@ -55,6 +67,10 @@ class ApplicationCompositionRoot {
   UserRegistryApplicationService createUserRegistryApplicationService() =>
       UserRegistryApplicationServiceRemoteAdapter(
           _httpClient, _accountModelToResourceConverter);
+
+  @protected
+  ParkDetailApplicationService createParkDetailApplicationService() =>
+      ParkDetailApplicationServiceRemoteAdapter();
 
   @protected
   UserAccountModelToResourceConverter
@@ -74,7 +90,15 @@ class ApplicationCompositionRoot {
       );
 
   @protected
-  Widget createHomeScreen() => const HomeScreen();
+  Widget createHomeScreen() => HomeScreen(null, createParkPresenter());
+
+  @protected
+  Widget createParkDetailScreen(final ParkDetailScreenArguments arguments) =>
+      ParkDetailScreen(
+        null,
+        createParkDetailPresenter(),
+        arguments,
+      );
 
   @protected
   LoginPresenter createLoginPresenter() => LoginPresenter();
@@ -82,4 +106,11 @@ class ApplicationCompositionRoot {
   @protected
   SignupPresenter createSignupPresenter() =>
       SignupPresenter(_userRegistryApplicationService);
+
+  @protected
+  ParkPresenter createParkPresenter() => ParkPresenter();
+
+  @protected
+  ParkDetailPresenter createParkDetailPresenter() =>
+      ParkDetailPresenter(_parkDetailApplicationService);
 }
