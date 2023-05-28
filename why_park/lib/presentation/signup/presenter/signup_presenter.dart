@@ -1,12 +1,16 @@
 import 'package:bloc/bloc.dart';
+import 'package:why_park/application/account/model/user_account_model.dart';
+import 'package:why_park/application/account/user_registry_application_service.dart';
 import 'package:why_park/presentation/signup/presenter/sign_events.dart';
 import 'package:why_park/presentation/signup/presenter/signup_state.dart';
 
 class SignupPresenter extends Bloc<SignupEvent, SignupState> {
-  SignupPresenter() : super(const SignupState()) {
+  SignupPresenter(this._userRegistryApplicationService) : super(const SignupState()) {
     on<SignupClickedEvent>(_onSignupSubmitted);
     on<SignupFieldsChangedEvent>(_onFieldChangedEvent);
   }
+
+  final UserRegistryApplicationService _userRegistryApplicationService;
 
   _onFieldChangedEvent(
       final SignupFieldsChangedEvent event, final Emitter<SignupState> emit) {
@@ -27,10 +31,6 @@ class SignupPresenter extends Bloc<SignupEvent, SignupState> {
   }
 
   _onSignupSubmitted(final _, final Emitter<SignupState> emit) {
-    print(state.email);
-    print(state.name);
-    print(state.password);
-    print(state.confirmPassword);
-    // TODO: chamar o serviço de Signup
+    _userRegistryApplicationService.createAccount(UserAccountModel(state.email, state.name, state.password));
   }
 }
