@@ -1,4 +1,3 @@
-
 import '../model/vehicle_view_model.dart';
 
 abstract class VehicleEvents {}
@@ -6,19 +5,19 @@ abstract class VehicleEvents {}
 class GetUserVehiclesListEvent extends VehicleEvents {}
 
 class RegisterVehicleEvent extends VehicleEvents {
-  final VehicleViewModel viewModel;
-
   RegisterVehicleEvent(this.viewModel);
+
+  final VehicleViewModel viewModel;
 }
 
 class UpdateVehicleEvent extends VehicleEvents {
-  final String uuid;
-
   UpdateVehicleEvent(this.uuid);
+
+  final String uuid;
 }
 
 class DeleteVehicleEvent extends VehicleEvents {
-  final String uuid;
-
   DeleteVehicleEvent(this.uuid);
+
+  final String uuid;
 }

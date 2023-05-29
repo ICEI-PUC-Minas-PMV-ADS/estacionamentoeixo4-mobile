@@ -69,101 +69,98 @@ class _BottomSheetNearestParksState extends State<BottomSheetNearestParks> {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                            Navigator.of(context).pushNamed(
-                              RoutesTable.parkDetail,
-                              arguments: ParkDetailScreenArguments(
-                                state.nearestParks[index],
-                                state.latitude,
-                                state.longitude,
-                              ),
-                            );
-                          },
-                          child: Card(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 16.0, horizontal: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        _resolveFadeText(
-                                            state.nearestParks[index].name),
-                                        style: const TextStyle(fontSize: 18.0),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        state.nearestParks[index].address
-                                            .split('-')
-                                            .first,
-                                        overflow: TextOverflow.fade,
-                                        maxLines: 1,
-                                        softWrap: false,
-                                      ),
-                                      Text(
-                                        state.nearestParks[index].address
-                                            .split('- ')
-                                            .last,
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Icon(Icons.star,
-                                              color: Colors.amber),
-                                          Text(state.nearestParks[index].rating
-                                              .toString())
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.deepPurple,
-                                            border: Border.all(),
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(20))),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(5),
-                                          child: Text(
-                                              'A ${state.nearestParks[index].distanceForMe.truncateToDouble()} km'),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            color: const Color(0xFFF27D16),
-                                            border: Border.all(),
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(20))),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(5),
-                                          child: Text(
-                                              'R\$ ${state.nearestParks[index].pricePerHour}/h'),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.of(context).pushNamed(
+                            RoutesTable.parkDetail,
+                            arguments: ParkDetailScreenArguments(
+                              state.nearestParks[index],
+                              state.latitude,
+                              state.longitude,
                             ),
-                          )),
+                          );
+                        },
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 16.0, horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      _resolveFadeText(
+                                          state.nearestParks[index].name),
+                                      style: const TextStyle(fontSize: 18.0),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      state.nearestParks[index].address
+                                          .split('-')
+                                          .first,
+                                      overflow: TextOverflow.fade,
+                                      maxLines: 1,
+                                      softWrap: false,
+                                    ),
+                                    Text(
+                                      state.nearestParks[index].address
+                                          .split('- ')
+                                          .last,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.star,
+                                            color: Colors.amber),
+                                        Text(state.nearestParks[index].rating
+                                            .toString())
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.deepPurple,
+                                          border: Border.all(),
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(20))),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5),
+                                        child: Text(
+                                            'A ${state.nearestParks[index].distanceForMe.truncateToDouble()} km'),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          color: const Color(0xFFF27D16),
+                                          border: Border.all(),
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(20))),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5),
+                                        child: Text(
+                                            'R\$ ${state.nearestParks[index].pricePerHour}/h'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     );
                   },
                   itemCount: state.nearestParks.length,

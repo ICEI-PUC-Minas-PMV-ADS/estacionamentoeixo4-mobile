@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:why_park/presentation/vehicle/model/vehicle_view_model.dart';
+import 'package:why_park/presentation/vehicle/presenter/vehicle_events.dart';
 import 'package:why_park/presentation/vehicle/presenter/vehicle_presenter.dart';
 import 'dumb_widgets/image_box.dart';
 
@@ -18,10 +20,14 @@ class _VehicleRegistrationState extends State<VehicleRegistrationScreen> {
   static const _carImagePath = 'assets/images/img_car.png';
   static const _motorcycleImagePath = 'assets/images/img_motorcycle.png';
 
-  bool _isFirstSelected = false;
+  bool _isFirstSelected = true;
   bool _isSecondSelected = false;
 
   Preferential _preferential = Preferential.no;
+
+  final TextEditingController _licensePlateController = TextEditingController();
+  final TextEditingController _modelController = TextEditingController();
+  final FocusNode _modelFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +68,11 @@ class _VehicleRegistrationState extends State<VehicleRegistrationScreen> {
                 ],
               ),
               const SizedBox(
-                height: 60,
+                height: 50,
               ),
               TextFormField(
-                //focusNode: _emailFocusNode,
-                onChanged: (value) => null,
-                onFieldSubmitted: (_) => null,
+                controller: _licensePlateController,
+                onFieldSubmitted: (_) => _modelFocusNode.requestFocus(),
                 decoration: const InputDecoration(
                   labelText: 'Placa',
                   filled: true,
@@ -77,9 +82,8 @@ class _VehicleRegistrationState extends State<VehicleRegistrationScreen> {
                 height: 20,
               ),
               TextFormField(
-                //focusNode: _emailFocusNode,
-                onChanged: (value) => null,
-                onFieldSubmitted: (_) => null,
+                controller: _modelController,
+                focusNode: _modelFocusNode,
                 decoration: const InputDecoration(
                   labelText: 'Modelo',
                   filled: true,
@@ -92,52 +96,36 @@ class _VehicleRegistrationState extends State<VehicleRegistrationScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "Possui necessidade especial?",
+                    "Possui necessidades especiais?",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  Theme(
-                    data: ThemeData(unselectedWidgetColor: Colors.grey[500]),
-                    child: RadioListTile(
-                      activeColor: const Color(0xFFF27D16),
-                      controlAffinity: ListTileControlAffinity.platform,
-                      title: const Text(
-                        'Não',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      value: Preferential.no,
-                      groupValue: _preferential,
-                      onChanged: (value) {
-                        setState(() {
-                          _preferential = value!;
-                        });
-                      },
-                    ),
+                  RadioListTile(
+                    activeColor: const Color(0xFFF27D16),
+                    controlAffinity: ListTileControlAffinity.platform,
+                    title: const Text('Não'),
+                    value: Preferential.no,
+                    groupValue: _preferential,
+                    onChanged: (value) {
+                      setState(() {
+                        _preferential = value!;
+                      });
+                    },
                   ),
-                  Theme(
-                    data: ThemeData(unselectedWidgetColor: Colors.grey[500]),
-                    child: RadioListTile(
-                      activeColor: const Color(0xFFF27D16),
-                      controlAffinity: ListTileControlAffinity.platform,
-                      title: const Text(
-                        'Sim',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      value: Preferential.yes,
-                      groupValue: _preferential,
-                      onChanged: (value) {
-                        setState(() {
-                          _preferential = value!;
-                        });
-                      },
-                    ),
+                  RadioListTile(
+                    activeColor: const Color(0xFFF27D16),
+                    controlAffinity: ListTileControlAffinity.platform,
+                    title: const Text('Sim'),
+                    value: Preferential.yes,
+                    groupValue: _preferential,
+                    onChanged: (value) {
+                      setState(() {
+                        _preferential = value!;
+                      });
+                    },
                   ),
                 ],
               ),
-              SizedBox(height: mediaQueryHeight * 0.15),
+              SizedBox(height: mediaQueryHeight * 0.12),
               Column(
                 children: [
                   Row(
@@ -145,30 +133,17 @@ class _VehicleRegistrationState extends State<VehicleRegistrationScreen> {
                     children: [
                       Expanded(
                         child: OutlinedButton(
-                          style: const ButtonStyle(
-                              backgroundColor:
-                                  MaterialStatePropertyAll(Color(0xFFFFFFFF))),
                           onPressed: () {
-                            Navigator.pop(context);
+                            widget._presenter.add(RegisterVehicleEvent(
+                                VehicleViewModel(
+                                    _isFirstSelected
+                                        ? VehicleType.car
+                                        : VehicleType.bike,
+                                    _licensePlateController.text,
+                                    _modelController.value.text)));
+                                Navigator.pop(context);
                           },
                           child: const Text(
-                            'Voltar',
-                            style: TextStyle(
-                              color: Color(0xFF5E5CE5),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: mediaQueryWidth * 0.05,
-                      ),
-                      const Expanded(
-                        child: OutlinedButton(
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStatePropertyAll(Color(0xFF5E5CE5))),
-                          onPressed: null,
-                          child: Text(
                             'Cadastrar',
                           ),
                         ),

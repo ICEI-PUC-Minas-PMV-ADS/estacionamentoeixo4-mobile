@@ -111,7 +111,7 @@ class ApplicationCompositionRoot {
   Widget createSignupScreen() => SignupScreen(createSignupPresenter());
 
   @protected
-  Widget createHomeScreen() => HomeScreen(createParkPresenter());
+  Widget createHomeScreen() => HomeScreen(createParkPresenter(), createVehiclePresenter());
 
   @protected
   Widget createParkDetailScreen(final ParkDetailScreenArguments arguments) =>
