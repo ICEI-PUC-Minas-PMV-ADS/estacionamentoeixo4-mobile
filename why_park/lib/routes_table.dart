@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:why_park/configuration/application_composition_root.dart';
 import 'package:why_park/presentation/park/park_detail_screen_arguments.dart';
+import 'package:why_park/presentation/vehicle/model/vehicle_view_model.dart';
 
 class RoutesTable {
   RoutesTable._();
@@ -20,11 +21,15 @@ class RoutesTable {
     login: (final context) => _applicationCompositionRoot.newLoginScreen(),
     signup: (final context) => _applicationCompositionRoot.newSignupScreen(),
     home: (final context) => _applicationCompositionRoot.newHomeScreen(),
-    vehicle: (final context) =>
-        _applicationCompositionRoot.newVehicleRegistrationScreen(),
+    vehicle: (final context) {
+      final arguments = ModalRoute.of(context)?.settings.arguments
+          as VehicleViewModel?;
+
+      return _applicationCompositionRoot.newVehicleRegistrationScreen(arguments);
+    },
     parkDetail: (final context) {
-      final arguments =
-          ModalRoute.of(context)?.settings.arguments as ParkDetailScreenArguments;
+      final arguments = ModalRoute.of(context)?.settings.arguments
+          as ParkDetailScreenArguments;
       return _applicationCompositionRoot.newParkDetailScreen(arguments);
     },
   };

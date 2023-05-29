@@ -11,9 +11,10 @@ class RegisterVehicleEvent extends VehicleEvents {
 }
 
 class UpdateVehicleEvent extends VehicleEvents {
-  UpdateVehicleEvent(this.uuid);
+  UpdateVehicleEvent(this.viewModel);
 
-  final String uuid;
+  final VehicleViewModel viewModel;
+
 }
 
 class DeleteVehicleEvent extends VehicleEvents {

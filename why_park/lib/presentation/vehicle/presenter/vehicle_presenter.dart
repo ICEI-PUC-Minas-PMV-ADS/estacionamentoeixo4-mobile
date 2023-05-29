@@ -17,13 +17,11 @@ class VehiclePresenter extends Bloc<VehicleEvents, VehicleState> {
 
   Future<void> _onGetUserVehicles(final GetUserVehiclesListEvent event,
       final Emitter<VehicleState> emit) async {
-
     final List<VehicleViewModel> list = VehicleMock.list.map(
       (e) {
-        return VehicleViewModel(e.type, e.licensePlate, e.model);
+        return VehicleViewModel(e.type, e.licensePlate, e.model, e.uuid);
       },
     ).toList();
-
 
     emit(state.copyWith(usersVehicles: list, status: Status.success));
   }
@@ -34,19 +32,30 @@ class VehiclePresenter extends Bloc<VehicleEvents, VehicleState> {
   }
 
   Future<void> _updateUserVehicles(
-      final UpdateVehicleEvent event, final Emitter<VehicleState> emit) async {}
+      final UpdateVehicleEvent event, final Emitter<VehicleState> emit) async {
+    VehicleMock.list.removeWhere(
+        (element) => element.uuid == event.viewModel.uuid);
+    VehicleMock.list.add(event.viewModel);
 
-  Future<void> _deleteUserVehicles(
-      final DeleteVehicleEvent event, final Emitter<VehicleState> emit) async {
-
-    VehicleMock.list.removeWhere((element) => element.licensePlate == event.uuid);
-    
     final List<VehicleViewModel> list = VehicleMock.list.map(
-          (e) {
-        return VehicleViewModel(e.type, e.licensePlate, e.model);
+      (e) {
+        return VehicleViewModel(e.type, e.licensePlate, e.model, e.uuid);
       },
     ).toList();
 
+    emit(state.copyWith(usersVehicles: list, status: Status.success));
+  }
+
+  Future<void> _deleteUserVehicles(
+      final DeleteVehicleEvent event, final Emitter<VehicleState> emit) async {
+    VehicleMock.list
+        .removeWhere((element) => element.uuid == event.uuid);
+
+    final List<VehicleViewModel> list = VehicleMock.list.map(
+      (e) {
+        return VehicleViewModel(e.type, e.licensePlate, e.model, e.uuid);
+      },
+    ).toList();
 
     emit(state.copyWith(usersVehicles: list, status: Status.success));
   }

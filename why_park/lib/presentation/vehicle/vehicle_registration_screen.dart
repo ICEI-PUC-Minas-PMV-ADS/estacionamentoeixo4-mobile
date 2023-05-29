@@ -7,10 +7,12 @@ import 'dumb_widgets/image_box.dart';
 enum Preferential { yes, no }
 
 class VehicleRegistrationScreen extends StatefulWidget {
-  const VehicleRegistrationScreen(this._presenter, [final Key? key])
+  const VehicleRegistrationScreen(this._presenter, this._viewModel,
+      [final Key? key])
       : super(key: key);
 
   final VehiclePresenter _presenter;
+  final VehicleViewModel? _viewModel;
 
   @override
   State<StatefulWidget> createState() => _VehicleRegistrationState();
@@ -20,8 +22,27 @@ class _VehicleRegistrationState extends State<VehicleRegistrationScreen> {
   static const _carImagePath = 'assets/images/img_car.png';
   static const _motorcycleImagePath = 'assets/images/img_motorcycle.png';
 
-  bool _isFirstSelected = true;
-  bool _isSecondSelected = false;
+  bool _isEditing() => widget._viewModel != null;
+
+  bool _resolveCarVehicleType() {
+    return _isEditing() ? widget._viewModel!.type == VehicleType.car : false;
+  }
+
+  bool _resolveBikeVehicleType() {
+    return _isEditing() ? widget._viewModel!.type == VehicleType.bike : false;
+  }
+
+  @override
+  void initState() {
+    _isEditing()
+        ? _licensePlateController.text = widget._viewModel!.licensePlate
+        : '';
+    _isEditing() ? _modelController.text = widget._viewModel!.model : '';
+    super.initState();
+  }
+
+  late bool _isFirstSelected = _resolveCarVehicleType();
+  late bool _isSecondSelected = _resolveBikeVehicleType();
 
   Preferential _preferential = Preferential.no;
 
@@ -134,17 +155,27 @@ class _VehicleRegistrationState extends State<VehicleRegistrationScreen> {
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () {
-                            widget._presenter.add(RegisterVehicleEvent(
-                                VehicleViewModel(
-                                    _isFirstSelected
-                                        ? VehicleType.car
-                                        : VehicleType.bike,
-                                    _licensePlateController.text,
-                                    _modelController.value.text)));
-                                Navigator.pop(context);
+                            _isEditing()
+                                ? widget._presenter.add(UpdateVehicleEvent(
+                                    VehicleViewModel(
+                                        _isFirstSelected
+                                            ? VehicleType.car
+                                            : VehicleType.bike,
+                                        _licensePlateController.text,
+                                        _modelController.value.text,
+                                        widget._viewModel!.uuid)))
+                                : widget._presenter.add(RegisterVehicleEvent(
+                                    VehicleViewModel(
+                                        _isFirstSelected
+                                            ? VehicleType.car
+                                            : VehicleType.bike,
+                                        _licensePlateController.text,
+                                        _modelController.value.text,
+                                        _licensePlateController.text)));
+                            Navigator.pop(context);
                           },
-                          child: const Text(
-                            'Cadastrar',
+                          child: Text(
+                            _isEditing() ? 'Atualizar' : 'Cadastrar',
                           ),
                         ),
                       ),

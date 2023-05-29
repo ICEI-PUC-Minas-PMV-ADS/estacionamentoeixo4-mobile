@@ -3,6 +3,8 @@ import 'package:why_park/presentation/vehicle/model/vehicle_view_model.dart';
 import 'package:why_park/presentation/vehicle/presenter/vehicle_events.dart';
 import 'package:why_park/presentation/vehicle/presenter/vehicle_presenter.dart';
 
+import '../../../routes_table.dart';
+
 class VehicleCard extends StatelessWidget {
   VehicleCard(this._vehicleViewModel, this._presenter, [Key? key]) : super(key: key);
 
@@ -38,8 +40,9 @@ class VehicleCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(right: 16),
                       child: OutlinedButton(
-                        onPressed: () {
-                          null;
+                        onPressed: () async {
+                          await Navigator.of(context).pushNamed(RoutesTable.vehicle, arguments: _vehicleViewModel);
+                          _presenter.add(GetUserVehiclesListEvent());
                           Navigator.pop(context);
                         },
                         child: const Text(
@@ -49,7 +52,7 @@ class VehicleCard extends StatelessWidget {
                     ),
                     OutlinedButton(
                       onPressed: () {
-                        _presenter.add(DeleteVehicleEvent(_vehicleViewModel.licensePlate));
+                        _presenter.add(DeleteVehicleEvent(_vehicleViewModel.uuid));
                         Navigator.pop(context);
                       },
                       child: const Icon(Icons.delete, color: Colors.deepOrange,),

@@ -18,6 +18,7 @@ import 'package:why_park/presentation/park/park_detail_presenter/park_detail_pre
 import 'package:why_park/presentation/park/park_detail_screen.dart';
 import 'package:why_park/presentation/park/park_presenter/park_presenter.dart';
 import 'package:why_park/presentation/signup/presenter/signup_presenter.dart';
+import 'package:why_park/presentation/vehicle/model/vehicle_view_model.dart';
 import 'package:why_park/presentation/vehicle/presenter/vehicle_presenter.dart';
 import 'package:why_park/presentation/vehicle/vehicle_registration_screen.dart';
 
@@ -70,7 +71,8 @@ class ApplicationCompositionRoot {
       createParkDetailScreen(arguments);
 
   @nonVirtual
-  Widget newVehicleRegistrationScreen() => createVehicleRegistrationScreen();
+  Widget newVehicleRegistrationScreen(final VehicleViewModel? viewModel) =>
+      createVehicleRegistrationScreen(viewModel);
 
   // Factories
   @protected
@@ -111,7 +113,8 @@ class ApplicationCompositionRoot {
   Widget createSignupScreen() => SignupScreen(createSignupPresenter());
 
   @protected
-  Widget createHomeScreen() => HomeScreen(createParkPresenter(), createVehiclePresenter());
+  Widget createHomeScreen() =>
+      HomeScreen(createParkPresenter(), createVehiclePresenter());
 
   @protected
   Widget createParkDetailScreen(final ParkDetailScreenArguments arguments) =>
@@ -121,8 +124,11 @@ class ApplicationCompositionRoot {
       );
 
   @protected
-  Widget createVehicleRegistrationScreen() =>
-      VehicleRegistrationScreen(createVehiclePresenter());
+  Widget createVehicleRegistrationScreen(final VehicleViewModel? viewModel) =>
+      VehicleRegistrationScreen(
+        createVehiclePresenter(),
+        viewModel,
+      );
 
   // Presenters factories
 
