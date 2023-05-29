@@ -88,6 +88,16 @@ class Styles {
               bottomRight: Radius.circular(30.0),
             ),
           ),
-        ));
+        ),
+        listTileTheme: ListTileThemeData(
+            textColor: isDarkTheme ? Colors.white : Colors.black),
+        unselectedWidgetColor: Colors.grey[500],
+        splashColor: Colors.deepPurple,
+        dialogTheme: DialogTheme(
+            backgroundColor: isDarkTheme ? Colors.white : Colors.grey[700],
+            titleTextStyle:
+                TextStyle(color: isDarkTheme ? Colors.black : Colors.white),
+            contentTextStyle:
+                TextStyle(color: isDarkTheme ? Colors.black : Colors.white)));
   }
 }

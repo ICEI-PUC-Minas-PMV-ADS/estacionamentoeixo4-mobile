@@ -6,7 +6,7 @@ import 'package:why_park/presentation/login/presenter/login_state.dart';
 import 'package:why_park/routes_table.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen(final Key? key, this._loginPresenter) : super(key: key);
+  const LoginScreen(this._loginPresenter, [final Key? key]) : super(key: key);
 
   final LoginPresenter _loginPresenter;
 
@@ -55,7 +55,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           focusNode: _emailFocusNode,
                           onChanged: (value) => widget._loginPresenter
                               .add(LoginFieldsChangedEvent("email", value)),
-                          onFieldSubmitted: (_) => _passwordFocusNode.requestFocus(),
+                          onFieldSubmitted: (_) =>
+                              _passwordFocusNode.requestFocus(),
                           decoration: const InputDecoration(
                             labelText: 'E-mail',
                             filled: true,

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:why_park/commons/commons_theme/theme_provider.dart';
 import 'package:why_park/presentation/home/menu_drawer.dart';
 import 'package:why_park/presentation/park/park_presenter/park_presenter.dart';
 import 'package:why_park/presentation/park/park_screen.dart';
+import 'package:why_park/presentation/vehicle/presenter/vehicle_presenter.dart';
+import 'package:why_park/presentation/vehicle/vehicle_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen(final Key? key, this._parkPresenter) : super(key: key);
+  const HomeScreen(this._parkPresenter, this._vehiclePresenter, [final Key? key]) : super(key: key);
 
   final ParkPresenter _parkPresenter;
+  final VehiclePresenter _vehiclePresenter;
 
   @override
   State<StatefulWidget> createState() => _HomeScreenState();
@@ -27,8 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _widgetOptions = [
-      ParkScreen(null, widget._parkPresenter),
-      const Text('Seus veículos aqui'),
+      ParkScreen(widget._parkPresenter),
+      VehicleListScreen(widget._vehiclePresenter),
       const Text('Suas reservas recentes'),
     ];
 

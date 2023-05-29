@@ -6,5 +6,8 @@ class ParkDetailScreenArguments {
   final double personalLongitude;
 
   ParkDetailScreenArguments(
-      this.viewModel, this.personalLatitude, this.personalLongitude);
+    this.viewModel,
+    this.personalLatitude,
+    this.personalLongitude,
+  );
 }

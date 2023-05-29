@@ -5,7 +5,7 @@ import 'package:why_park/presentation/signup/presenter/signup_presenter.dart';
 import 'package:why_park/presentation/signup/presenter/signup_state.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen(final Key? key, this._signupPresenter) : super(key: key);
+  const SignupScreen(this._signupPresenter, [final Key? key]) : super(key: key);
 
   final SignupPresenter _signupPresenter;
 
