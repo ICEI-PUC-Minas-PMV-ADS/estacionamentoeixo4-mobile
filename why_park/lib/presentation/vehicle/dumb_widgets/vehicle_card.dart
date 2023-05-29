@@ -1,37 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:why_park/presentation/vehicle/model/vehicle_view_model.dart';
+import 'package:why_park/presentation/vehicle/presenter/vehicle_events.dart';
+import 'package:why_park/presentation/vehicle/presenter/vehicle_presenter.dart';
 
 class VehicleCard extends StatelessWidget {
-  VehicleCard(this._vehicleViewModel, [Key? key]) : super(key: key);
+  VehicleCard(this._vehicleViewModel, this._presenter, [Key? key]) : super(key: key);
 
   final VehicleViewModel _vehicleViewModel;
+  final VehiclePresenter _presenter;
   static const _carImagePath = 'assets/images/img_car.png';
   static const _motorcycleImagePath = 'assets/images/img_motorcycle.png';
 
   @override
   Widget build(BuildContext context) {
-    final mediaQueryHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
-    final mediaQueryWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    final bottom = MediaQuery
-        .of(context)
-        .viewInsets
-        .bottom;
+    final mediaQueryHeight = MediaQuery.of(context).size.height;
+    final mediaQueryWidth = MediaQuery.of(context).size.width;
+    final bottom = MediaQuery.of(context).viewInsets.bottom;
+
+    Future<void> _showCustomDialog(final BuildContext context) async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: true,
+        builder: (final BuildContext context) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12))),
+            content: Text(
+              'Aqui você pode editar ou excluir o seu veículo ${_vehicleViewModel.model} de placa ${_vehicleViewModel.licensePlate}',
+              style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 20),
+            ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: OutlinedButton(
+                        onPressed: () {
+                          null;
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          'Editar',
+                        ),
+                      ),
+                    ),
+                    OutlinedButton(
+                      onPressed: () {
+                        _presenter.add(DeleteVehicleEvent(_vehicleViewModel.licensePlate));
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(Icons.delete, color: Colors.deepOrange,),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
 
     return InkWell(
-      onLongPress: () => print('long press'),
+      onLongPress: () => _showCustomDialog(context),
       customBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child:
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Image.asset(
             _vehicleViewModel.type == VehicleType.car
                 ? _carImagePath
@@ -48,8 +88,7 @@ class VehicleCard extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Colors.deepPurple,
                     border: Border.all(),
-                    borderRadius:
-                    const BorderRadius.all(Radius.circular(20))),
+                    borderRadius: const BorderRadius.all(Radius.circular(20))),
                 child: Padding(
                   padding: const EdgeInsets.all(5),
                   child: Text("Modelo: ${_vehicleViewModel.model}"),
@@ -62,8 +101,7 @@ class VehicleCard extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: const Color(0xFFF27D16),
                     border: Border.all(),
-                    borderRadius:
-                    const BorderRadius.all(Radius.circular(20))),
+                    borderRadius: const BorderRadius.all(Radius.circular(20))),
                 child: Padding(
                   padding: const EdgeInsets.all(5),
                   child: Text("Placa: ${_vehicleViewModel.licensePlate}"),

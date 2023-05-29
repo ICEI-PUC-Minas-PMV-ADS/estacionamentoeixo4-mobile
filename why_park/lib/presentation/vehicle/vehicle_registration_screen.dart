@@ -125,7 +125,7 @@ class _VehicleRegistrationState extends State<VehicleRegistrationScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: mediaQueryHeight * 0.12),
+              SizedBox(height: mediaQueryHeight * 0.05),
               Column(
                 children: [
                   Row(

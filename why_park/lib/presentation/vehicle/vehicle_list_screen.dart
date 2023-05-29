@@ -37,7 +37,7 @@ class _VehicleListScreenState extends State<VehicleListScreen> {
             padding: EdgeInsets.fromLTRB(0, 0, 0, bottom),
             child: ListView.separated(
               itemBuilder: (final BuildContext context, final int index) {
-                return VehicleCard(state.usersVehicles[index]);
+                return VehicleCard(state.usersVehicles[index], widget._presenter);
               },
               itemCount: state.usersVehicles.length,
               separatorBuilder: (final BuildContext context, final int index) =>

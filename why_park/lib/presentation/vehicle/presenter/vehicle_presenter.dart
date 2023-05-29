@@ -37,5 +37,17 @@ class VehiclePresenter extends Bloc<VehicleEvents, VehicleState> {
       final UpdateVehicleEvent event, final Emitter<VehicleState> emit) async {}
 
   Future<void> _deleteUserVehicles(
-      final DeleteVehicleEvent event, final Emitter<VehicleState> emit) async {}
+      final DeleteVehicleEvent event, final Emitter<VehicleState> emit) async {
+
+    VehicleMock.list.removeWhere((element) => element.licensePlate == event.uuid);
+    
+    final List<VehicleViewModel> list = VehicleMock.list.map(
+          (e) {
+        return VehicleViewModel(e.type, e.licensePlate, e.model);
+      },
+    ).toList();
+
+
+    emit(state.copyWith(usersVehicles: list, status: Status.success));
+  }
 }
