@@ -1,8 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:why_park/edge/services/user_login_application_service_remote_adapter.dart';
 import 'package:why_park/routes_table.dart';
 
 import '../../../application/account/model/user_account_model.dart';
@@ -35,8 +32,7 @@ class LoginPresenter extends Bloc<LoginEvent, LoginState> {
 
   _onLoginSubmitted(
       final BuildContext context, final Emitter<LoginState> emit) async {
-    print(state.email);
-    print(state.password);
+
 
     if (state.email.isNotEmpty && state.password.isNotEmpty) {
       try {
@@ -44,8 +40,6 @@ class LoginPresenter extends Bloc<LoginEvent, LoginState> {
             UserAccountModel(state.email, state.password));
         Navigator.of(context).pushNamed(RoutesTable.home);
       } catch (e) {
-        print(e);
-
         showDialog(
           context: context,
           builder: (BuildContext context) {
