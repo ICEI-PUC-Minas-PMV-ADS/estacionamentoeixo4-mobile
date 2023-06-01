@@ -9,10 +9,16 @@ import 'commons/commons_theme/theme_data.dart';
 import 'commons/commons_theme/theme_provider.dart';
 import 'configuration/application_composition_root.dart';
 
+// FIREBASE
+import 'package:firebase_core/firebase_core.dart';
+
 final ApplicationCompositionRoot _applicationCompositionRoot =
     ApplicationCompositionRoot.instance();
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 

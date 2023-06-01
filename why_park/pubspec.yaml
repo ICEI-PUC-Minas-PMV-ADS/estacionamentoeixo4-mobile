@@ -52,6 +52,8 @@ dependencies:
   http: ^0.13.6
   flutter_polyline_points: ^1.0.0
   flutter_secure_storage: ^8.0.0
+  firebase_core: ^2.13.0
+  firebase_auth: ^4.6.1
 
 dev_dependencies:
   flutter_test:

@@ -134,7 +134,7 @@ class _SignupScreenState extends State<SignupScreen> {
               SizedBox(height: mediaQueryHeight * 0.03),
               OutlinedButton(
                 onPressed: () =>
-                    widget._signupPresenter.add(SignupClickedEvent()),
+                    widget._signupPresenter.add(SignupClickedEvent(context)),
                 child: const Text(
                   'Cadastrar',
                 ),

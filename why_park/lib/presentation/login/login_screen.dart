@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:why_park/presentation/login/presenter/login_events.dart';
@@ -103,8 +104,8 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: mediaQueryHeight * 0.02),
               OutlinedButton(
                 onPressed: () {
-                  widget._loginPresenter.add(LoginClickedEvent());
-                  Navigator.of(context).pushNamed(RoutesTable.home);
+                  widget._loginPresenter.add(LoginClickedEvent(context));
+                  // Navigator.of(context).pushNamed(RoutesTable.home);
                 },
                 child: const Text(
                   'Entrar',
