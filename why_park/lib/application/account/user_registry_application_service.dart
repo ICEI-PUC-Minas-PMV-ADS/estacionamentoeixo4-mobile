@@ -1,5 +1,7 @@
 import 'package:why_park/application/account/model/user_account_model.dart';
 
-abstract class UserRegistryApplicationService {
-  Future<void>createAccount(UserAccountModel userModel);
+abstract class UserAuthApplicationService {
+  Future<void> loginWithEmailAndPassword(final UserAccountModel model);
+
+  Future<void> signUpWithEmailAndPassword(final UserAccountModel model);
 }

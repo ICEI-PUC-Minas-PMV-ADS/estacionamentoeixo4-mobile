@@ -1,17 +1,15 @@
 import 'package:bloc/bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:why_park/application/account/model/user_account_model.dart';
 import 'package:why_park/application/account/user_registry_application_service.dart';
 import 'package:why_park/presentation/signup/presenter/sign_events.dart';
 import 'package:why_park/presentation/signup/presenter/signup_state.dart';
 
 import '../../../routes_table.dart';
-import '../../login/presenter/login_service.dart';
+import '../../../edge/services/user_login_application_service_remote_adapter.dart';
 
 class SignupPresenter extends Bloc<SignupEvent, SignupState> {
-  SignupPresenter(this._userRegistryApplicationService)
+  SignupPresenter(this._userAuthApplicationService)
       : super(const SignupState()) {
     on<SignupClickedEvent>((event, emit) {
       _onSignupSubmitted(event.context, emit);
@@ -19,7 +17,7 @@ class SignupPresenter extends Bloc<SignupEvent, SignupState> {
     on<SignupFieldsChangedEvent>(_onFieldChangedEvent);
   }
 
-  final UserRegistryApplicationService _userRegistryApplicationService;
+  final UserAuthApplicationService _userAuthApplicationService;
 
   _onFieldChangedEvent(
       final SignupFieldsChangedEvent event, final Emitter<SignupState> emit) {
@@ -41,13 +39,9 @@ class SignupPresenter extends Bloc<SignupEvent, SignupState> {
 
   _onSignupSubmitted(
       final BuildContext context, final Emitter<SignupState> emit) async {
-    _userRegistryApplicationService.createAccount(
-        UserAccountModel(state.email, state.name, state.password));
-
     if (state.email.isNotEmpty && state.password.isNotEmpty) {
       try {
-        await LoginService.signUpWithEmailAndPassword(
-            email: state.email, password: state.password);
+        await _userAuthApplicationService.signUpWithEmailAndPassword(UserAccountModel(state.email, state.password));
         Navigator.of(context).pushNamed(RoutesTable.login);
       } catch (e) {
         print(e);

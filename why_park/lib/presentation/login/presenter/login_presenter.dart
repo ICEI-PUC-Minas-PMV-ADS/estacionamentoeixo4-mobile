@@ -2,19 +2,24 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:why_park/presentation/login/presenter/login_service.dart';
+import 'package:why_park/edge/services/user_login_application_service_remote_adapter.dart';
 import 'package:why_park/routes_table.dart';
 
+import '../../../application/account/model/user_account_model.dart';
+import '../../../application/account/user_registry_application_service.dart';
 import 'login_events.dart';
 import 'login_state.dart';
 
 class LoginPresenter extends Bloc<LoginEvent, LoginState> {
-  LoginPresenter() : super(const LoginState()) {
+  LoginPresenter(this._userAuthApplicationService)
+      : super(const LoginState()) {
     on<LoginClickedEvent>((event, emit) {
       _onLoginSubmitted(event.context, emit);
     });
     on<LoginFieldsChangedEvent>(_onFieldChangedEvent);
   }
+
+  final UserAuthApplicationService _userAuthApplicationService;
 
   _onFieldChangedEvent(
       final LoginFieldsChangedEvent event, final Emitter<LoginState> emit) {
@@ -35,8 +40,8 @@ class LoginPresenter extends Bloc<LoginEvent, LoginState> {
 
     if (state.email.isNotEmpty && state.password.isNotEmpty) {
       try {
-        await LoginService.loginWithEmailAndPassword(
-            email: state.email, password: state.password);
+        await _userAuthApplicationService.loginWithEmailAndPassword(
+            UserAccountModel(state.email, state.password));
         Navigator.of(context).pushNamed(RoutesTable.home);
       } catch (e) {
         print(e);
