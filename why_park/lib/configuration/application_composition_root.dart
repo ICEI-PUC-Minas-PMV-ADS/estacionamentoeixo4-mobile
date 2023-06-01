@@ -4,13 +4,17 @@ import 'package:why_park/application/account/user_registry_application_service.d
 import 'package:why_park/application/park/park_detail_application_service.dart';
 import 'package:why_park/application/park/park_query_application_service.dart';
 import 'package:why_park/application/vehicle/vehicle_query_application_service.dart';
+import 'package:why_park/edge/converters/park_resource_to_model_converter.dart';
 import 'package:why_park/edge/converters/user_account_model_to_resource_converter.dart';
+import 'package:why_park/edge/http/auth_interceptor.dart';
 import 'package:why_park/edge/http/custom_http_client.dart';
 import 'package:why_park/edge/http/dio_http_client.dart';
 import 'package:why_park/edge/services/park_detail_application_service_remote_adapter.dart';
 import 'package:why_park/edge/services/park_query_application_service_remote_adapter.dart';
 import 'package:why_park/edge/services/user_registry_application_service_remote_adapter.dart';
 import 'package:why_park/edge/services/vehicle_query_application_service_remote_adapter.dart';
+import 'package:why_park/edge/session_storage/flutter_secure_session_storage.dart';
+import 'package:why_park/edge/session_storage/session_storage.dart';
 import 'package:why_park/presentation/home/home_screen.dart';
 import 'package:why_park/presentation/login/login_screen.dart';
 import 'package:why_park/presentation/login/presenter/login_presenter.dart';
@@ -28,9 +32,12 @@ import '../presentation/signup/signup_screen.dart';
 class ApplicationCompositionRoot {
   ApplicationCompositionRoot() {
     // initialize dependencies
+    _sessionStorage = createSessionStorage();
+    _authInterceptor = createAuthInterceptor();
     _httpClient = createCustomHttpClient();
     _accountModelToResourceConverter =
         createUserAccountModelToResourceConverter();
+    _parkResourceToModelConverter = createParkResourceToModelConverter();
     _userRegistryApplicationService = createUserRegistryApplicationService();
     _parkDetailApplicationService = createParkDetailApplicationService();
     _parkQueryApplicationService = createParkQueryApplicationService();
@@ -43,9 +50,12 @@ class ApplicationCompositionRoot {
 
   static const String _baseUrl = 'http://10.0.2.2:3000';
 
+  late final SessionStorage _sessionStorage;
+  late final AuthInterceptor _authInterceptor;
   late final CustomHttpClient _httpClient;
   late final UserAccountModelToResourceConverter
       _accountModelToResourceConverter;
+  late final ParkResourceToModelConverter _parkResourceToModelConverter;
   late final UserRegistryApplicationService _userRegistryApplicationService;
   late final ParkDetailApplicationService _parkDetailApplicationService;
   late final ParkQueryApplicationService _parkQueryApplicationService;
@@ -76,7 +86,11 @@ class ApplicationCompositionRoot {
 
   // Factories
   @protected
-  CustomHttpClient createCustomHttpClient() => DioHttpClient(urlBase: _baseUrl);
+  CustomHttpClient createCustomHttpClient() => DioHttpClient(urlBase: _baseUrl, authInterceptor: _authInterceptor);
+
+  SessionStorage createSessionStorage() => FlutterSecureSessionStorage();
+
+  AuthInterceptor createAuthInterceptor() => AuthInterceptor(_sessionStorage);
 
   @protected
   UserRegistryApplicationService createUserRegistryApplicationService() =>
@@ -91,7 +105,8 @@ class ApplicationCompositionRoot {
 
   @protected
   createParkQueryApplicationService() =>
-      ParkQueryApplicationServiceRemoteAdapter(_httpClient);
+      ParkQueryApplicationServiceRemoteAdapter(
+          _httpClient, _parkResourceToModelConverter);
 
   @protected
   createVehicleQueryApplicationService() =>
@@ -103,6 +118,10 @@ class ApplicationCompositionRoot {
   UserAccountModelToResourceConverter
       createUserAccountModelToResourceConverter() =>
           UserAccountModelToResourceConverter();
+
+  @protected
+  ParkResourceToModelConverter createParkResourceToModelConverter() =>
+      ParkResourceToModelConverter();
 
   // Screens factories
 

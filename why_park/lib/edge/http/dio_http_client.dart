@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:why_park/edge/http/auth_interceptor.dart';
 
 import 'custom_http_client.dart';
 import 'custom_http_response.dart';
 
 class DioHttpClient implements CustomHttpClient {
-  DioHttpClient({required final String urlBase}) {
+  DioHttpClient({required final String urlBase, required final AuthInterceptor authInterceptor}) {
     _dio.options = BaseOptions(
       baseUrl: urlBase,
       connectTimeout: connectTimeout,
@@ -12,6 +13,7 @@ class DioHttpClient implements CustomHttpClient {
       sendTimeout: sendTimeout,
       responseType: ResponseType.json,
     );
+    _dio.interceptors.add(authInterceptor);
   }
 
   final Dio _dio = Dio();

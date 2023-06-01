@@ -67,16 +67,18 @@ class ParkPresenter extends Bloc<ParkEvents, ParkState> {
     final GetNearestParks event,
     final Emitter<ParkState> emit,
   ) async {
-    final List<ParkViewModel> list = ParksMock.parkingLots.map(
+    final List<ParkViewModel> list = ParksMock.parkingLots
+        .where((e) => e.latitude != null && e.longitude != null)
+        .map(
       (e) {
         return ParkViewModel(
-            e.name,
-            e.address,
+            e.name ?? '',
+            e.address ?? '',
             _calculateDistance(
                   state.latitude,
                   state.longitude,
-                  e.latitude,
-                  e.longitude,
+                  e.latitude!,
+                  e.longitude!,
                 ) /
                 _toKilometersDivisor,
             e.latitude,
@@ -105,19 +107,22 @@ class ParkPresenter extends Bloc<ParkEvents, ParkState> {
   ) async {
     // TODO: create appService
     final List<ParkModel> list = ParksMock.parkingLots
-        .where((element) => element.address.contains(event.value))
+        .where((element) =>
+            element.address!.contains(event.value) &&
+            element.longitude != null &&
+            element.latitude != null)
         .toList();
     final filteredList = list.map(
       (e) {
         // TODO: add converter
         return ParkViewModel(
-            e.name,
-            e.address,
+            e.name ?? '',
+            e.address ?? '',
             _calculateDistance(
                   state.latitude,
                   state.longitude,
-                  e.latitude,
-                  e.longitude,
+                  e.latitude!,
+                  e.longitude!,
                 ) /
                 _toKilometersDivisor,
             e.latitude,

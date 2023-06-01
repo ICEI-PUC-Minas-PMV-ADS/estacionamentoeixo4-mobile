@@ -60,8 +60,8 @@ class _ParkDetailScreenState extends State<ParkDetailScreen> {
   void _setupMarkers() {
     _markers.add(Marker(
       markerId: MarkerId(widget._arguments.viewModel.name),
-      position: LatLng(widget._arguments.viewModel.latitude,
-          widget._arguments.viewModel.longitude),
+      position: LatLng(widget._arguments.viewModel.latitude!,
+          widget._arguments.viewModel.longitude!),
     ));
     _markers.add(Marker(
       markerId: const MarkerId('Personal location'),
@@ -101,8 +101,8 @@ class _ParkDetailScreenState extends State<ParkDetailScreen> {
         child: GoogleMap(
           mapType: MapType.normal,
           initialCameraPosition: CameraPosition(
-            target: LatLng(widget._arguments.viewModel.latitude,
-                widget._arguments.viewModel.longitude),
+            target: LatLng(widget._arguments.viewModel.latitude!,
+                widget._arguments.viewModel.longitude!),
             zoom: 18.4746,
           ),
           onMapCreated: (GoogleMapController controller) {
@@ -119,9 +119,9 @@ class _ParkDetailScreenState extends State<ParkDetailScreen> {
               heroTag: 'btn2',
               onPressed: () => widget._presenter.add(GetDirectionEvent(
                     widget._arguments.personalLatitude,
-                    widget._arguments.viewModel.latitude,
+                    widget._arguments.viewModel.latitude!,
                     widget._arguments.personalLongitude,
-                    widget._arguments.viewModel.longitude,
+                    widget._arguments.viewModel.longitude!,
                   )),
               child: const Icon(Icons.alt_route)),
           const SizedBox(
