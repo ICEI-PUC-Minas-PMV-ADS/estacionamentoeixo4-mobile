@@ -1,26 +1,22 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:why_park/application/account/model/user_account_model.dart';
 import 'package:why_park/application/account/user_registry_application_service.dart';
 import 'package:why_park/presentation/signup/presenter/sign_events.dart';
 import 'package:why_park/presentation/signup/presenter/signup_state.dart';
 
-import '../../../routes_table.dart';
-import '../../../edge/services/user_login_application_service_remote_adapter.dart';
+import '../../../utils/state_status.dart';
 
 class SignupPresenter extends Bloc<SignupEvent, SignupState> {
   SignupPresenter(this._userAuthApplicationService)
       : super(const SignupState()) {
-    on<SignupClickedEvent>((event, emit) {
-      _onSignupSubmitted(event.context, emit);
-    });
+    on<SignupClickedEvent>(_onSignupSubmitted);
     on<SignupFieldsChangedEvent>(_onFieldChangedEvent);
   }
 
   final UserAuthApplicationService _userAuthApplicationService;
 
-  _onFieldChangedEvent(
-      final SignupFieldsChangedEvent event, final Emitter<SignupState> emit) {
+  Future<void> _onFieldChangedEvent(final SignupFieldsChangedEvent event,
+      final Emitter<SignupState> emit) async {
     switch (event.label) {
       case "email":
         emit(state.copyWith(email: event.value));
@@ -37,42 +33,21 @@ class SignupPresenter extends Bloc<SignupEvent, SignupState> {
     }
   }
 
-  _onSignupSubmitted(
-      final BuildContext context, final Emitter<SignupState> emit) async {
-    if (state.email.isNotEmpty && state.password.isNotEmpty) {
+  Future<void> _onSignupSubmitted(
+      final _, final Emitter<SignupState> emit) async {
+    if (!_isPasswordEquals()) {
+      emit(state.copyWith(status: Status.invalid));
+    } else {
       try {
-        await _userAuthApplicationService.signUpWithEmailAndPassword(UserAccountModel(state.email, state.password));
-        Navigator.of(context).pushNamed(RoutesTable.login);
-      } catch (e) {
-        print(e);
-
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text(
-                'Erro ao cadastrar',
-                style: TextStyle(color: Colors.black),
-              ),
-              content: const Text(
-                'Ocorreu um erro ao cadastar. Verifique as informações e tente novamente.',
-                style: TextStyle(color: Colors.black),
-              ),
-              actions: [
-                TextButton(
-                  child: const Text(
-                    'OK',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
+        emit(state.copyWith(status: Status.loading));
+        await _userAuthApplicationService.signUpWithEmailAndPassword(
+            UserAccountModel(state.email, state.password));
+        emit(state.copyWith(status: Status.success));
+      } on Exception catch (e) {
+        emit(state.copyWith(status: Status.failure));
       }
     }
   }
+
+  bool _isPasswordEquals() => state.password == state.confirmPassword;
 }

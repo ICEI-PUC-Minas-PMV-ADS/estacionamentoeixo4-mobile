@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-enum Status { initial, valid, invalid, loading, success, failure }
+import '../../../utils/state_status.dart';
+
 
 class SignupState extends Equatable {
   const SignupState({

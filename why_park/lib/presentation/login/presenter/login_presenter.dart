@@ -1,18 +1,14 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
-import 'package:why_park/routes_table.dart';
 
 import '../../../application/account/model/user_account_model.dart';
 import '../../../application/account/user_registry_application_service.dart';
+import '../../../utils/state_status.dart';
 import 'login_events.dart';
 import 'login_state.dart';
 
 class LoginPresenter extends Bloc<LoginEvent, LoginState> {
-  LoginPresenter(this._userAuthApplicationService)
-      : super(const LoginState()) {
-    on<LoginClickedEvent>((event, emit) {
-      _onLoginSubmitted(event.context, emit);
-    });
+  LoginPresenter(this._userAuthApplicationService) : super(const LoginState()) {
+    on<LoginClickedEvent>(_onLoginSubmitted);
     on<LoginFieldsChangedEvent>(_onFieldChangedEvent);
   }
 
@@ -30,43 +26,15 @@ class LoginPresenter extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  _onLoginSubmitted(
-      final BuildContext context, final Emitter<LoginState> emit) async {
+  Future<void> _onLoginSubmitted(final _, final Emitter<LoginState> emit) async {
+    try {
+      emit(state.copyWith(status: Status.loading));
 
-
-    if (state.email.isNotEmpty && state.password.isNotEmpty) {
-      try {
-        await _userAuthApplicationService.loginWithEmailAndPassword(
-            UserAccountModel(state.email, state.password));
-        Navigator.of(context).pushNamed(RoutesTable.home);
-      } catch (e) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text(
-                'Erro de login',
-                style: TextStyle(color: Colors.black),
-              ),
-              content: const Text(
-                'Ocorreu um erro ao fazer login. Verifique suas credenciais e tente novamente.',
-                style: TextStyle(color: Colors.black),
-              ),
-              actions: [
-                TextButton(
-                  child: const Text(
-                    'OK',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      }
+      await _userAuthApplicationService.loginWithEmailAndPassword(
+          UserAccountModel(state.email, state.password));
+      emit(state.copyWith(status: Status.success));
+    } on Exception catch (e) {
+      emit(state.copyWith(status: Status.failure));
     }
   }
 }
