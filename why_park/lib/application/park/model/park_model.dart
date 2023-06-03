@@ -1,6 +1,7 @@
 class ParkModel {
-  ParkModel(this.latitude, this.longitude, this.name, this.address, this.rating, this.pricePerHour, this.priorityVacancies, this.vacancies);
+  ParkModel(this.id, this.latitude, this.longitude, this.name, this.address, this.rating, this.pricePerHour, this.priorityVacancies, this.vacancies);
 
+  final String? id;
   final double? latitude;
   final double? longitude;
   final String? name;

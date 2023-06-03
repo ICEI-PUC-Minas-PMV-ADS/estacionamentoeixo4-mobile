@@ -18,10 +18,10 @@ class LoginPresenter extends Bloc<LoginEvent, LoginState> {
       final LoginFieldsChangedEvent event, final Emitter<LoginState> emit) {
     switch (event.label) {
       case "email":
-        emit(state.copyWith(email: event.value));
+        emit(state.copyWith(email: event.value, status: Status.initial));
         break;
       case "password":
-        emit(state.copyWith(password: event.value));
+        emit(state.copyWith(password: event.value, status: Status.initial));
         break;
     }
   }

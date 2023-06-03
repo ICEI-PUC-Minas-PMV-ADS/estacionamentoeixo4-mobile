@@ -7,24 +7,22 @@ part of 'park_resource.dart';
 // **************************************************************************
 
 ParkResource _$ParkResourceFromJson(Map<String, dynamic> json) => ParkResource(
-      (json['latitude'] as num?)?.toDouble(),
-      (json['longitude'] as num?)?.toDouble(),
-      json['name'] as String?,
-      json['address'] as String?,
-      (json['rating'] as num?)?.toDouble(),
-      (json['pricePerHour'] as num?)?.toDouble(),
-      json['priorityVacancies'] as int?,
-      json['vacancies'] as int?,
+      json['id'] as String?,
+      json['razao_social'] as String?,
+      (json['Endereco'] as List<dynamic>?)
+          ?.map((e) => e as Map<String, dynamic>)
+          .toList(),
+      (json['preco'] as num?)?.toDouble(),
+      json['vagas_preferenciais'] as int?,
+      json['vagas_gerais'] as int?,
     );
 
 Map<String, dynamic> _$ParkResourceToJson(ParkResource instance) =>
     <String, dynamic>{
-      'latitude': instance.latitude,
-      'longitude': instance.longitude,
-      'name': instance.name,
-      'address': instance.address,
-      'rating': instance.rating,
-      'pricePerHour': instance.pricePerHour,
-      'priorityVacancies': instance.priorityVacancies,
-      'vacancies': instance.vacancies,
+      'id': instance.id,
+      'razao_social': instance.name,
+      'Endereco': instance.address,
+      'preco': instance.price,
+      'vagas_preferenciais': instance.priorityVacancies,
+      'vagas_gerais': instance.vacancies,
     };

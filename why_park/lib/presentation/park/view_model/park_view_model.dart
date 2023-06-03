@@ -1,7 +1,9 @@
 class ParkViewModel {
   ParkViewModel(
+    this.id,
     this.name,
-    this.address, this.distanceForMe,
+    this.address,
+    this.distanceForMe,
     this.latitude,
     this.longitude,
     this.rating,
@@ -10,6 +12,7 @@ class ParkViewModel {
     this.vacancies,
   );
 
+  final String id;
   final String name;
   final String address;
   final double distanceForMe;

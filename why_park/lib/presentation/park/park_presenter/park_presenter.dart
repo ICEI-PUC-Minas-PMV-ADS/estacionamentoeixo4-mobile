@@ -6,7 +6,6 @@ import 'package:why_park/application/park/park_query_application_service.dart';
 import 'package:why_park/presentation/park/park_presenter/park_events.dart';
 import 'package:why_park/presentation/park/park_presenter/park_state.dart';
 import 'package:why_park/presentation/park/view_model/park_view_model.dart';
-import 'package:why_park/utils/parks_mock.dart';
 
 import '../../../commons/commons_geolocator/user_geolocator_provider.dart';
 import '../../../commons/commons_theme/theme_provider.dart';
@@ -67,11 +66,14 @@ class ParkPresenter extends Bloc<ParkEvents, ParkState> {
     final GetNearestParks event,
     final Emitter<ParkState> emit,
   ) async {
-    final List<ParkViewModel> list = ParksMock.parkingLots
-        .where((e) => e.latitude != null && e.longitude != null)
-        .map(
+    final List<ParkModel> list =
+        await _applicationService.findParksByLocation();
+    // final List<ParkViewModel> list = ParksMock.parkingLots
+    final List<ParkViewModel> enrichedList =
+        list.where((e) => e.latitude != null && e.longitude != null).map(
       (e) {
         return ParkViewModel(
+            e.id ?? '',
             e.name ?? '',
             e.address ?? '',
             _calculateDistance(
@@ -90,9 +92,9 @@ class ParkPresenter extends Bloc<ParkEvents, ParkState> {
       },
     ).toList();
 
-    list.sort((a, b) => a.distanceForMe.compareTo(b.distanceForMe));
+    enrichedList.sort((a, b) => a.distanceForMe.compareTo(b.distanceForMe));
 
-    emit(state.copyWith(nearestParks: list, status: Status.success));
+    emit(state.copyWith(nearestParks: enrichedList, status: Status.success));
   }
 
   double _calculateDistance(double startLatitude, double startLongitude,
@@ -106,16 +108,16 @@ class ParkPresenter extends Bloc<ParkEvents, ParkState> {
     final Emitter<ParkState> emit,
   ) async {
     // TODO: create appService
-    final List<ParkModel> list = ParksMock.parkingLots
-        .where((element) =>
-            element.address!.contains(event.value) &&
-            element.longitude != null &&
-            element.latitude != null)
-        .toList();
-    final filteredList = list.map(
+
+    final List<ParkModel> list =
+        await _applicationService.findParksByLocation();
+    // final List<ParkViewModel> list = ParksMock.parkingLots
+    final List<ParkViewModel> enrichedList =
+        list.where((e) => e.latitude != null && e.longitude != null).map(
       (e) {
         // TODO: add converter
         return ParkViewModel(
+            e.id ?? '',
             e.name ?? '',
             e.address ?? '',
             _calculateDistance(
@@ -134,6 +136,8 @@ class ParkPresenter extends Bloc<ParkEvents, ParkState> {
       },
     ).toList();
 
-    emit(state.copyWith(nearestParks: filteredList, status: Status.success));
+    enrichedList.sort((a, b) => a.distanceForMe.compareTo(b.distanceForMe));
+
+    emit(state.copyWith(nearestParks: enrichedList, status: Status.success));
   }
 }

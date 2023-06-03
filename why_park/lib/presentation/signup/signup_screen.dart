@@ -127,6 +127,10 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                           SizedBox(height: mediaQueryHeight * 0.03),
                           TextFormField(
+                            validator: ValidationBuilder(localeName: 'pt-br')
+                                .minLength(6)
+                                .maxLength(50)
+                                .build(),
                             focusNode: _confirmPasswordNode,
                             onChanged: (value) => widget._signupPresenter.add(
                                 SignupFieldsChangedEvent(

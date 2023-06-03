@@ -19,16 +19,16 @@ class SignupPresenter extends Bloc<SignupEvent, SignupState> {
       final Emitter<SignupState> emit) async {
     switch (event.label) {
       case "email":
-        emit(state.copyWith(email: event.value));
+        emit(state.copyWith(email: event.value, status: Status.initial));
         break;
       case "name":
-        emit(state.copyWith(name: event.value));
+        emit(state.copyWith(name: event.value, status: Status.initial));
         break;
       case "password":
-        emit(state.copyWith(password: event.value));
+        emit(state.copyWith(password: event.value, status: Status.initial));
         break;
       case "confirmPassword":
-        emit(state.copyWith(confirmPassword: event.value));
+        emit(state.copyWith(confirmPassword: event.value, status: Status.initial));
         break;
     }
   }
