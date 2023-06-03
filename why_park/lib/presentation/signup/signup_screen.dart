@@ -182,7 +182,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                               false;
                                       if (valid) {
                                         widget._signupPresenter
-                                            .add(SignupClickedEvent(context));
+                                            .add(SignupClickedEvent());
                                       }
                                     },
                                     child: const Text(

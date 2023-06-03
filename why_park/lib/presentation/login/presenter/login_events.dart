@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 
 abstract class LoginEvent {}
 
@@ -10,7 +9,6 @@ class LoginFieldsChangedEvent extends LoginEvent {
 }
 
 class LoginClickedEvent extends LoginEvent {
-  final BuildContext context;
 
-  LoginClickedEvent(this.context);
+  LoginClickedEvent();
 }

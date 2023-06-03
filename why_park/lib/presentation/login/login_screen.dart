@@ -137,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               false;
                                       if (valid) {
                                         widget._loginPresenter
-                                            .add(LoginClickedEvent(context));
+                                            .add(LoginClickedEvent());
                                       }
                                       // Navigator.of(context).pushNamed(RoutesTable.home);
                                     },
