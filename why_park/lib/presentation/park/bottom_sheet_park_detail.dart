@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:why_park/presentation/park/park_detail_presenter/park_detail_presenter.dart';
 import 'package:why_park/presentation/park/park_detail_presenter/park_detail_state.dart';
 import 'package:why_park/presentation/park/view_model/park_view_model.dart';
+import 'package:why_park/routes_table.dart';
 
 class BottomSheetParkDetail extends StatefulWidget {
   const BottomSheetParkDetail(this._presenter, this._parkViewModel, [Key? key])
@@ -83,7 +84,7 @@ class _BottomSheetParkDetailState extends State<BottomSheetParkDetail> {
                         style: const ButtonStyle(
                             backgroundColor: MaterialStatePropertyAll<Color>(
                                 Color(0xFFF27D16))),
-                        onPressed: null,
+                        onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(RoutesTable.reservation, (route) => route.settings.name == RoutesTable.home, arguments: widget._parkViewModel),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [

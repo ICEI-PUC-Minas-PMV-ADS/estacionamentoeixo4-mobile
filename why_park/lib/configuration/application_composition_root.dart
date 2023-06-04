@@ -20,6 +20,8 @@ import 'package:why_park/presentation/login/presenter/login_presenter.dart';
 import 'package:why_park/presentation/park/park_detail_presenter/park_detail_presenter.dart';
 import 'package:why_park/presentation/park/park_detail_screen.dart';
 import 'package:why_park/presentation/park/park_presenter/park_presenter.dart';
+import 'package:why_park/presentation/park/view_model/park_view_model.dart';
+import 'package:why_park/presentation/reservation/reservation_screen.dart';
 import 'package:why_park/presentation/signup/presenter/signup_presenter.dart';
 import 'package:why_park/presentation/vehicle/model/vehicle_view_model.dart';
 import 'package:why_park/presentation/vehicle/presenter/vehicle_presenter.dart';
@@ -45,7 +47,7 @@ class ApplicationCompositionRoot {
 
   static final ApplicationCompositionRoot _me = ApplicationCompositionRoot();
 
-  static const String _baseUrl = 'http://10.0.2.2:3000';
+  static const String _baseUrl = 'https://whypark.ddns.net';
 
   late final SessionStorage _sessionStorage;
   late final AuthInterceptor _authInterceptor;
@@ -78,6 +80,9 @@ class ApplicationCompositionRoot {
   @nonVirtual
   Widget newVehicleRegistrationScreen(final VehicleViewModel? viewModel) =>
       createVehicleRegistrationScreen(viewModel);
+
+  @nonVirtual
+  Widget newReservationScreen(final ParkViewModel viewModel) => createReservationScreen(viewModel);
 
   // Factories
   @protected
@@ -138,6 +143,9 @@ class ApplicationCompositionRoot {
         createVehiclePresenter(),
         viewModel,
       );
+
+  @protected
+  Widget createReservationScreen(final ParkViewModel viewModel) => ReservationScreen(viewModel);
 
   // Presenters factories
 

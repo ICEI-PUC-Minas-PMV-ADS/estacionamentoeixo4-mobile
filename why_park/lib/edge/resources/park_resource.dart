@@ -14,7 +14,7 @@ class ParkResource {
   );
 
   @JsonKey(name: 'id')
-  final String? id;
+  final int? id;
 
   @JsonKey(name: 'razao_social')
   final String? name;
@@ -23,7 +23,7 @@ class ParkResource {
   final List<Map<String, dynamic>>? address;
 
   @JsonKey(name: 'preco')
-  final double? price;
+  final String? price;
 
   @JsonKey(name: 'vagas_preferenciais')
   final int? priorityVacancies;

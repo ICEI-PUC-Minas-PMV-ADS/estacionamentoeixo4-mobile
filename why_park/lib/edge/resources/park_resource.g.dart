@@ -7,12 +7,12 @@ part of 'park_resource.dart';
 // **************************************************************************
 
 ParkResource _$ParkResourceFromJson(Map<String, dynamic> json) => ParkResource(
-      json['id'] as String?,
+      json['id'] as int?,
       json['razao_social'] as String?,
       (json['Endereco'] as List<dynamic>?)
           ?.map((e) => e as Map<String, dynamic>)
           .toList(),
-      (json['preco'] as num?)?.toDouble(),
+      json['preco'] as String?,
       json['vagas_preferenciais'] as int?,
       json['vagas_gerais'] as int?,
     );

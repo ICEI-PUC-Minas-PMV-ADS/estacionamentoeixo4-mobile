@@ -5,7 +5,6 @@ import 'package:why_park/presentation/vehicle/presenter/vehicle_events.dart';
 import 'package:why_park/presentation/vehicle/presenter/vehicle_presenter.dart';
 import 'package:why_park/presentation/vehicle/presenter/vehicle_state.dart';
 import '../../routes_table.dart';
-import 'model/vehicle_view_model.dart';
 
 class VehicleListScreen extends StatefulWidget {
   const VehicleListScreen(this._presenter, [Key? key]) : super(key: key);
