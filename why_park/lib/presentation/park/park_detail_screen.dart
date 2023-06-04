@@ -11,7 +11,7 @@ import 'package:why_park/presentation/park/park_detail_presenter/park_detail_sta
 import 'package:why_park/presentation/park/park_detail_screen_arguments.dart';
 
 class ParkDetailScreen extends StatefulWidget {
-  const ParkDetailScreen(Key? key, this._presenter, this._arguments)
+  const ParkDetailScreen(this._presenter, this._arguments, [Key? key])
       : super(key: key);
 
   final ParkDetailPresenter _presenter;
@@ -60,8 +60,8 @@ class _ParkDetailScreenState extends State<ParkDetailScreen> {
   void _setupMarkers() {
     _markers.add(Marker(
       markerId: MarkerId(widget._arguments.viewModel.name),
-      position: LatLng(widget._arguments.viewModel.latitude,
-          widget._arguments.viewModel.longitude),
+      position: LatLng(widget._arguments.viewModel.latitude!,
+          widget._arguments.viewModel.longitude!),
     ));
     _markers.add(Marker(
       markerId: const MarkerId('Personal location'),
@@ -101,8 +101,8 @@ class _ParkDetailScreenState extends State<ParkDetailScreen> {
         child: GoogleMap(
           mapType: MapType.normal,
           initialCameraPosition: CameraPosition(
-            target: LatLng(widget._arguments.viewModel.latitude,
-                widget._arguments.viewModel.longitude),
+            target: LatLng(widget._arguments.viewModel.latitude!,
+                widget._arguments.viewModel.longitude!),
             zoom: 18.4746,
           ),
           onMapCreated: (GoogleMapController controller) {
@@ -119,9 +119,9 @@ class _ParkDetailScreenState extends State<ParkDetailScreen> {
               heroTag: 'btn2',
               onPressed: () => widget._presenter.add(GetDirectionEvent(
                     widget._arguments.personalLatitude,
-                    widget._arguments.viewModel.latitude,
+                    widget._arguments.viewModel.latitude!,
                     widget._arguments.personalLongitude,
-                    widget._arguments.viewModel.longitude,
+                    widget._arguments.viewModel.longitude!,
                   )),
               child: const Icon(Icons.alt_route)),
           const SizedBox(
@@ -133,7 +133,8 @@ class _ParkDetailScreenState extends State<ParkDetailScreen> {
               showModalBottomSheet<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  return BottomSheetParkDetail(null, widget._presenter, widget._arguments.viewModel);
+                  return BottomSheetParkDetail(
+                      widget._presenter, widget._arguments.viewModel);
                 },
               );
             },

@@ -9,7 +9,7 @@ import 'package:why_park/presentation/park/park_presenter/park_presenter.dart';
 import 'package:why_park/presentation/park/park_presenter/park_state.dart';
 
 class ParkScreen extends StatefulWidget {
-  const ParkScreen(final Key? key, this._presenter) : super(key: key);
+  const ParkScreen(this._presenter, [final Key? key]) : super(key: key);
 
   final ParkPresenter _presenter;
 
@@ -92,7 +92,7 @@ class _ParkScreenState extends State<ParkScreen> {
                       child: Container(
                         padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: BottomSheetNearestParks(null, widget._presenter),
+                        child: BottomSheetNearestParks(widget._presenter),
                       ),
                     );
                   },

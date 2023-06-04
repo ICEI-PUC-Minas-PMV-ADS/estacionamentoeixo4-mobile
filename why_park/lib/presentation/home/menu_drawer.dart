@@ -24,7 +24,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
             decoration: BoxDecoration(
               color: Colors.deepPurple,
             ),
-            child: Text('usuario_whypark@email.com'),
+            child: Text('usuario_whypark@email.com', style: TextStyle(color: Colors.white),),
           ),
           ListTile(
             title: darkTheme
@@ -44,8 +44,32 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ),
           ),
           ListTile(
-            title: const Text('Meus veículos'),
-            leading: Icon(Icons.car_repair_outlined,
+            title: const Text('Configurações de usuário'),
+            leading: Icon(Icons.person,
+                color: darkTheme ? Colors.white : Colors.black),
+            onTap: () {},
+          ),
+          ListTile(
+            title: const Text('Política de privacidade'),
+            leading: Icon(Icons.privacy_tip,
+                color: darkTheme ? Colors.white : Colors.black),
+            onTap: () {},
+          ),
+          ListTile(
+            title: const Text('Termos de serviço'),
+            leading: Icon(Icons.text_snippet_outlined,
+                color: darkTheme ? Colors.white : Colors.black),
+            onTap: () {},
+          ),
+          ListTile(
+            title: const Text('Avalie-nos'),
+            leading: Icon(Icons.star_rate,
+                color: darkTheme ? Colors.white : Colors.black),
+            onTap: () {},
+          ),
+          ListTile(
+            title: const Text('Sobre'),
+            leading: Icon(Icons.info_outline,
                 color: darkTheme ? Colors.white : Colors.black),
             onTap: () {},
           ),

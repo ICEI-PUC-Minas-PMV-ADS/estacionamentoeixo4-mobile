@@ -4,33 +4,50 @@ import 'package:why_park/application/account/user_registry_application_service.d
 import 'package:why_park/presentation/signup/presenter/sign_events.dart';
 import 'package:why_park/presentation/signup/presenter/signup_state.dart';
 
+import '../../../utils/state_status.dart';
+
 class SignupPresenter extends Bloc<SignupEvent, SignupState> {
-  SignupPresenter(this._userRegistryApplicationService) : super(const SignupState()) {
+  SignupPresenter(this._userAuthApplicationService)
+      : super(const SignupState()) {
     on<SignupClickedEvent>(_onSignupSubmitted);
     on<SignupFieldsChangedEvent>(_onFieldChangedEvent);
   }
 
-  final UserRegistryApplicationService _userRegistryApplicationService;
+  final UserAuthApplicationService _userAuthApplicationService;
 
-  _onFieldChangedEvent(
-      final SignupFieldsChangedEvent event, final Emitter<SignupState> emit) {
+  Future<void> _onFieldChangedEvent(final SignupFieldsChangedEvent event,
+      final Emitter<SignupState> emit) async {
     switch (event.label) {
       case "email":
-        emit(state.copyWith(email: event.value));
+        emit(state.copyWith(email: event.value, status: Status.initial));
         break;
       case "name":
-        emit(state.copyWith(name: event.value));
+        emit(state.copyWith(name: event.value, status: Status.initial));
         break;
       case "password":
-        emit(state.copyWith(password: event.value));
+        emit(state.copyWith(password: event.value, status: Status.initial));
         break;
       case "confirmPassword":
-        emit(state.copyWith(confirmPassword: event.value));
+        emit(state.copyWith(confirmPassword: event.value, status: Status.initial));
         break;
     }
   }
 
-  _onSignupSubmitted(final _, final Emitter<SignupState> emit) {
-    _userRegistryApplicationService.createAccount(UserAccountModel(state.email, state.name, state.password));
+  Future<void> _onSignupSubmitted(
+      final _, final Emitter<SignupState> emit) async {
+    if (!_isPasswordEquals()) {
+      emit(state.copyWith(status: Status.invalid));
+    } else {
+      try {
+        emit(state.copyWith(status: Status.loading));
+        await _userAuthApplicationService.signUpWithEmailAndPassword(
+            UserAccountModel(state.email, state.password));
+        emit(state.copyWith(status: Status.success));
+      } on Exception catch (e) {
+        emit(state.copyWith(status: Status.failure));
+      }
+    }
   }
+
+  bool _isPasswordEquals() => state.password == state.confirmPassword;
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "984551724955",
+    "project_id": "whyparkmobile-b2c62",
+    "storage_bucket": "whyparkmobile-b2c62.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984551724955:android:b012b8d5e0d9563358f33e",
+        "android_client_info": {
+          "package_name": "com.example.why_park"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkcNeas2wYRu45H9mcFrpX1sMc-TkVHbs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

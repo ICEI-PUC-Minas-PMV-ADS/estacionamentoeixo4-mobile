@@ -1,3 +1,4 @@
+
 abstract class SignupEvent {}
 
 class SignupFieldsChangedEvent extends SignupEvent {
@@ -7,4 +8,6 @@ class SignupFieldsChangedEvent extends SignupEvent {
   final String value;
 }
 
-class SignupClickedEvent extends SignupEvent {}
+class SignupClickedEvent extends SignupEvent {
+  SignupClickedEvent();
+}

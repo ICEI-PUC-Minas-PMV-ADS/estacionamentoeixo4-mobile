@@ -88,6 +88,17 @@ class Styles {
               bottomRight: Radius.circular(30.0),
             ),
           ),
-        ));
+        ),
+        listTileTheme: ListTileThemeData(
+            textColor: isDarkTheme ? Colors.white : Colors.black),
+        unselectedWidgetColor: Colors.grey[500],
+        splashColor: Colors.deepPurple,
+        dialogTheme: DialogTheme(
+          backgroundColor: Colors.white,
+        ),
+        tabBarTheme:
+            TabBarTheme(labelColor: isDarkTheme ? Colors.white : Colors.black),
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+            color: isDarkTheme ? Colors.white : Colors.deepPurple));
   }
 }

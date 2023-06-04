@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -9,10 +10,16 @@ import 'commons/commons_theme/theme_data.dart';
 import 'commons/commons_theme/theme_provider.dart';
 import 'configuration/application_composition_root.dart';
 
+// FIREBASE
+import 'package:firebase_core/firebase_core.dart';
+
 final ApplicationCompositionRoot _applicationCompositionRoot =
     ApplicationCompositionRoot.instance();
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 
@@ -51,6 +58,10 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+
     return ChangeNotifierProvider(
       create: (_) {
         return themeChangeProvider;

@@ -2,22 +2,24 @@ import 'package:bloc/bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:why_park/application/park/model/park_model.dart';
+import 'package:why_park/application/park/park_query_application_service.dart';
 import 'package:why_park/presentation/park/park_presenter/park_events.dart';
 import 'package:why_park/presentation/park/park_presenter/park_state.dart';
 import 'package:why_park/presentation/park/view_model/park_view_model.dart';
-import 'package:why_park/utils/parks_mock.dart';
 
 import '../../../commons/commons_geolocator/user_geolocator_provider.dart';
 import '../../../commons/commons_theme/theme_provider.dart';
 
 class ParkPresenter extends Bloc<ParkEvents, ParkState> {
-  ParkPresenter() : super(const ParkState()) {
+  ParkPresenter(this._applicationService) : super(const ParkState()) {
     on<GetPositionEvent>(_onDeterminePosition);
     on<GetNearestParks>(_onGetNearestParks);
     on<SearchParkByAddressEvent>(_findParks);
   }
 
   static const int _toKilometersDivisor = 1000;
+
+  final ParkQueryApplicationService _applicationService;
 
   Future<void> _onDeterminePosition(
     final GetPositionEvent event,
@@ -45,7 +47,6 @@ class ParkPresenter extends Bloc<ParkEvents, ParkState> {
     }
     Position position = await Geolocator.getCurrentPosition();
 
-    DarkThemeProvider themeChangeProvider = DarkThemeProvider();
     UserGeolocatorProvider userGeolocatorProvider = UserGeolocatorProvider();
 
     userGeolocatorProvider.location =
@@ -64,30 +65,41 @@ class ParkPresenter extends Bloc<ParkEvents, ParkState> {
     final GetNearestParks event,
     final Emitter<ParkState> emit,
   ) async {
-    final List<ParkViewModel> list = ParksMock.parkingLots.map(
-      (e) {
-        return ParkViewModel(
-            e.name,
-            e.address,
-            _calculateDistance(
-                  state.latitude,
-                  state.longitude,
-                  e.latitude,
-                  e.longitude,
-                ) /
-                _toKilometersDivisor,
-            e.latitude,
-            e.longitude,
-            e.rating,
-            e.pricePerHour,
-            e.priorityVacancies,
-            e.vacancies);
-      },
-    ).toList();
+    try {
+      emit(state.copyWith(status: Status.loading));
 
-    list.sort((a, b) => a.distanceForMe.compareTo(b.distanceForMe));
+      final List<ParkModel> list =
+          await _applicationService.findParksByLocation();
+      // final List<ParkViewModel> list = ParksMock.parkingLots
+      final List<ParkViewModel> enrichedList =
+          list.where((e) => e.latitude != null && e.longitude != null).map(
+        (e) {
+          return ParkViewModel(
+              e.id ?? 123,
+              e.name ?? '',
+              e.address ?? '',
+              _calculateDistance(
+                    state.latitude,
+                    state.longitude,
+                    e.latitude!,
+                    e.longitude!,
+                  ) /
+                  _toKilometersDivisor,
+              e.latitude,
+              e.longitude,
+              e.rating,
+              e.pricePerHour,
+              e.priorityVacancies,
+              e.vacancies);
+        },
+      ).toList();
 
-    emit(state.copyWith(nearestParks: list, status: Status.success));
+      enrichedList.sort((a, b) => a.distanceForMe.compareTo(b.distanceForMe));
+
+      emit(state.copyWith(nearestParks: enrichedList, status: Status.success));
+    } on Exception catch (e) {
+      emit(state.copyWith(nearestParks: [], status: Status.failure));
+    }
   }
 
   double _calculateDistance(double startLatitude, double startLongitude,
@@ -101,31 +113,48 @@ class ParkPresenter extends Bloc<ParkEvents, ParkState> {
     final Emitter<ParkState> emit,
   ) async {
     // TODO: create appService
-    final List<ParkModel> list = ParksMock.parkingLots
-        .where((element) => element.address.contains(event.value))
-        .toList();
-    final filteredList = list.map(
-      (e) {
-        // TODO: add converter
-        return ParkViewModel(
-            e.name,
-            e.address,
-            _calculateDistance(
-                  state.latitude,
-                  state.longitude,
-                  e.latitude,
-                  e.longitude,
-                ) /
-                _toKilometersDivisor,
-            e.latitude,
-            e.longitude,
-            e.rating,
-            e.pricePerHour,
-            e.priorityVacancies,
-            e.vacancies);
-      },
-    ).toList();
+    try {
+      emit(state.copyWith(status: Status.loading));
 
-    emit(state.copyWith(nearestParks: filteredList, status: Status.success));
+      final List<ParkModel> list =
+          await _applicationService.findParksByLocation();
+      // final List<ParkViewModel> list = ParksMock.parkingLots
+      final List<ParkViewModel> enrichedList = list
+          .where((e) =>
+              e.latitude != null &&
+              e.longitude != null &&
+              e.name != null &&
+              e.address != null &&
+              (e.name!.toLowerCase().contains(event.value.toLowerCase()) ||
+                  e.address!.toLowerCase().contains(event.value)))
+          .map(
+        (e) {
+          // TODO: add converter
+          return ParkViewModel(
+              e.id ?? 123,
+              e.name ?? '',
+              e.address ?? '',
+              _calculateDistance(
+                    state.latitude,
+                    state.longitude,
+                    e.latitude!,
+                    e.longitude!,
+                  ) /
+                  _toKilometersDivisor,
+              e.latitude,
+              e.longitude,
+              e.rating,
+              e.pricePerHour,
+              e.priorityVacancies,
+              e.vacancies);
+        },
+      ).toList();
+
+      enrichedList.sort((a, b) => a.distanceForMe.compareTo(b.distanceForMe));
+
+      emit(state.copyWith(nearestParks: enrichedList, status: Status.success));
+    } on Exception catch (e) {
+      emit(state.copyWith(nearestParks: [], status: Status.failure));
+    }
   }
 }
