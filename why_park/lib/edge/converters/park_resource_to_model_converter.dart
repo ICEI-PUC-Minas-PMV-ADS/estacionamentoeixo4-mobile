@@ -13,10 +13,10 @@ class ParkResourceToModelConverter {
   ParkModel convertTo(ParkResource resource) {
     return ParkModel(
       resource.id,
-      resource.address?.first[_latKey],
-      resource.address?.first[_lgtKey],
+      double.parse(resource.address?.first[_latKey]),
+      double.parse(resource.address?.first[_lgtKey]),
       resource.name,
-      resource.address?.first[_address] + '-' + resource.address?.first[_district] + '-' + resource.address?.first[_addressNumber],
+      resource.address?.first[_address] + ' - ' + resource.address?.first[_district] + ' - ' + resource.address?.first[_addressNumber].toString(),
       4,
       resource.price,
       resource.priorityVacancies,

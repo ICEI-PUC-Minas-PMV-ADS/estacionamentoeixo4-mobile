@@ -12,14 +12,14 @@ class ParkViewModel {
     this.vacancies,
   );
 
-  final String id;
+  final int id;
   final String name;
   final String address;
   final double distanceForMe;
   final double? latitude;
   final double? longitude;
   final double? rating;
-  final double? pricePerHour;
+  final String? pricePerHour;
   final int? priorityVacancies;
   final int? vacancies;
 }
