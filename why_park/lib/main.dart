@@ -38,10 +38,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   DarkThemeProvider themeChangeProvider = DarkThemeProvider();
   UserGeolocatorProvider userGeolocatorProvider = UserGeolocatorProvider();
+  bool hasUser = false;
 
   @override
   void initState() {
     getCurrentAppTheme();
+    hasIdentifiedUser();
     super.initState();
   }
 
@@ -54,6 +56,12 @@ class _MyAppState extends State<MyApp> {
   void getCurrentAppTheme() async {
     themeChangeProvider.darkTheme =
         await themeChangeProvider.darkThemePreference.getTheme();
+  }
+
+  void hasIdentifiedUser() async {
+    hasUser =
+        await _applicationCompositionRoot.sessionStorage.retrieveSession() !=
+            null;
   }
 
   @override
@@ -73,7 +81,9 @@ class _MyAppState extends State<MyApp> {
             navigatorKey: MyApp.navigatorKey,
             scaffoldMessengerKey: MyApp.scaffoldKey,
             theme: Styles.themeData(themeChangeProvider.darkTheme, context),
-            home: _applicationCompositionRoot.newLoginScreen(),
+            home: hasUser
+                ? _applicationCompositionRoot.newHomeScreen()
+                : _applicationCompositionRoot.newLoginScreen(),
             routes: RoutesTable.routes,
           );
         },

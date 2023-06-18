@@ -31,7 +31,7 @@ class LoginPresenter extends Bloc<LoginEvent, LoginState> {
       emit(state.copyWith(status: Status.loading));
 
       await _userAuthApplicationService.loginWithEmailAndPassword(
-          UserAccountModel(state.email, state.password));
+          UserAccountModel(state.email, state.password, ''));
       emit(state.copyWith(status: Status.success));
     } on Exception catch (e) {
       emit(state.copyWith(status: Status.failure));

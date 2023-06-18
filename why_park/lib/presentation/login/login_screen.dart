@@ -36,14 +36,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final mediaQueryHeight = MediaQuery.of(context).size.height;
     final mediaQueryWidth = MediaQuery.of(context).size.width;
-    final bottom = MediaQuery.of(context).viewInsets.bottom;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: EdgeInsets.fromLTRB(31.0, 0.0, 31.0, bottom),
-        child: SingleChildScrollView(
-          reverse: true,
+        padding: const EdgeInsets.fromLTRB(31.0, 0.0, 31.0, 0.0),
+        child: Center(
           child: Column(
             children: [
               SizedBox(height: mediaQueryHeight * 0.04),
@@ -117,8 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             bloc: widget._loginPresenter,
                             listener: (context, state) {
                               if (state.status == Status.success) {
-                                Navigator.of(context)
-                                    .pushNamed(RoutesTable.home);
+                                Navigator.of(context).popAndPushNamed(RoutesTable.home);
                               } else if (state.status == Status.failure) {
                                 CustomDialog.showCustomDialog(
                                   context,
@@ -176,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               const Text('Não tem uma conta?'),
                               TextButton(
                                 onPressed: () => Navigator.of(context)
-                                    .pushNamed(RoutesTable.signup),
+                                    .popAndPushNamed(RoutesTable.signup),
                                 child: const Text('Cadastre-se'),
                               ),
                             ],

@@ -1,12 +1,17 @@
 import 'package:why_park/application/vehicle/model/vehicle_model.dart';
 import 'package:why_park/application/vehicle/vehicle_query_application_service.dart';
+import 'package:why_park/edge/resources/vehicle_resource.dart';
 
+import '../converters/vehicle_converter.dart';
 import '../http/custom_http_client.dart';
 
-class VehicleQueryApplicationServiceRemoteAdapter implements VehicleQueryApplicationService {
-  VehicleQueryApplicationServiceRemoteAdapter(this._httpClient);
+class VehicleQueryApplicationServiceRemoteAdapter
+    implements VehicleQueryApplicationService {
+  VehicleQueryApplicationServiceRemoteAdapter(
+      this._httpClient, this._converter);
 
   final CustomHttpClient _httpClient;
+  final VehicleConverter _converter;
 
   @override
   Future<void> deleteUserVehicle(String uuid) {
@@ -21,9 +26,10 @@ class VehicleQueryApplicationServiceRemoteAdapter implements VehicleQueryApplica
   }
 
   @override
-  Future<void> registerUserVehicle(VehicleModel model) {
-    // TODO: implement registerUserVehicle
-    throw UnimplementedError();
+  Future<void> registerUserVehicle(VehicleModel model) async {
+    final VehicleResource resource = await _converter.convertFrom(model);
+
+    await _httpClient.post('/api_producer/veiculo', resource.toJson());
   }
 
   @override
@@ -31,5 +37,4 @@ class VehicleQueryApplicationServiceRemoteAdapter implements VehicleQueryApplica
     // TODO: implement updateUserVehicle
     throw UnimplementedError();
   }
-
 }

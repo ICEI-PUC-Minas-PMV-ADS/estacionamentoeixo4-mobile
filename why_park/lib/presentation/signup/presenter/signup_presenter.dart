@@ -41,7 +41,7 @@ class SignupPresenter extends Bloc<SignupEvent, SignupState> {
       try {
         emit(state.copyWith(status: Status.loading));
         await _userAuthApplicationService.signUpWithEmailAndPassword(
-            UserAccountModel(state.email, state.password));
+            UserAccountModel(state.email, state.password, state.name));
         emit(state.copyWith(status: Status.success));
       } on Exception catch (e) {
         emit(state.copyWith(status: Status.failure));

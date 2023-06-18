@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:why_park/presentation/park/view_model/park_view_model.dart';
+import 'package:why_park/presentation/reservation/reservation_presenter/reservation_events.dart';
+import 'package:why_park/presentation/reservation/reservation_presenter/reservation_presenter.dart';
 
 class ReservationScreen extends StatefulWidget {
-  const ReservationScreen(this._viewModel, [Key? key]) : super(key: key);
+  const ReservationScreen(this._viewModel, this._presenter, [Key? key]) : super(key: key);
 
   final ParkViewModel _viewModel;
+  final ReservationPresenter _presenter;
 
   @override
   State<ReservationScreen> createState() => _ReservationScreenState();
@@ -55,6 +58,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                     ScreenOne(),
                   ],
                 ),
+                TextFormField(),
               ],
             ),
           ),
@@ -63,7 +67,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
           style: const ButtonStyle(
               backgroundColor:
                   MaterialStatePropertyAll<Color>(Color(0xFFF27D16))),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => widget._presenter.add(ReservationSubmitted()),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [

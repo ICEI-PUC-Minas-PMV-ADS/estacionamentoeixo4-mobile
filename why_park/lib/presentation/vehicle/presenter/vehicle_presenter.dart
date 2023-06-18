@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:why_park/application/vehicle/model/vehicle_model.dart';
 import 'package:why_park/application/vehicle/vehicle_query_application_service.dart';
 import 'package:why_park/presentation/vehicle/model/vehicle_view_model.dart';
 import 'package:why_park/presentation/vehicle/presenter/vehicle_events.dart';
@@ -28,13 +29,18 @@ class VehiclePresenter extends Bloc<VehicleEvents, VehicleState> {
 
   Future<void> _registerUserVehicles(final RegisterVehicleEvent event,
       final Emitter<VehicleState> emit) async {
-    VehicleMock.list.add(event.viewModel);
+    _applicationService.registerUserVehicle(VehicleModel(
+      null,
+      event.viewModel.type,
+      event.viewModel.licensePlate,
+      event.viewModel.model,
+    ));
   }
 
   Future<void> _updateUserVehicles(
       final UpdateVehicleEvent event, final Emitter<VehicleState> emit) async {
-    VehicleMock.list.removeWhere(
-        (element) => element.uuid == event.viewModel.uuid);
+    VehicleMock.list
+        .removeWhere((element) => element.uuid == event.viewModel.uuid);
     VehicleMock.list.add(event.viewModel);
 
     final List<VehicleViewModel> list = VehicleMock.list.map(
@@ -48,8 +54,7 @@ class VehiclePresenter extends Bloc<VehicleEvents, VehicleState> {
 
   Future<void> _deleteUserVehicles(
       final DeleteVehicleEvent event, final Emitter<VehicleState> emit) async {
-    VehicleMock.list
-        .removeWhere((element) => element.uuid == event.uuid);
+    VehicleMock.list.removeWhere((element) => element.uuid == event.uuid);
 
     final List<VehicleViewModel> list = VehicleMock.list.map(
       (e) {
