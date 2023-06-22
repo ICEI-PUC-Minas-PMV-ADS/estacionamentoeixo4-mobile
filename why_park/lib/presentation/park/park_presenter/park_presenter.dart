@@ -126,7 +126,7 @@ class ParkPresenter extends Bloc<ParkEvents, ParkState> {
               e.name != null &&
               e.address != null &&
               (e.name!.toLowerCase().contains(event.value.toLowerCase()) ||
-                  e.address!.toLowerCase().contains(event.value)))
+                  e.address!.toLowerCase().contains(event.value.toLowerCase())))
           .map(
         (e) {
           // TODO: add converter
