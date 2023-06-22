@@ -9,6 +9,7 @@ import 'login_state.dart';
 class LoginPresenter extends Bloc<LoginEvent, LoginState> {
   LoginPresenter(this._userAuthApplicationService) : super(const LoginState()) {
     on<LoginClickedEvent>(_onLoginSubmitted);
+    on<GoggleLoginClickedEvent>(_onGoogleLoginSubmitted);
     on<LoginFieldsChangedEvent>(_onFieldChangedEvent);
   }
 
@@ -26,12 +27,25 @@ class LoginPresenter extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  Future<void> _onLoginSubmitted(final _, final Emitter<LoginState> emit) async {
+  Future<void> _onLoginSubmitted(
+      final _, final Emitter<LoginState> emit) async {
     try {
       emit(state.copyWith(status: Status.loading));
 
       await _userAuthApplicationService.loginWithEmailAndPassword(
           UserAccountModel(state.email, state.password, ''));
+      emit(state.copyWith(status: Status.success));
+    } on Exception catch (e) {
+      emit(state.copyWith(status: Status.failure));
+    }
+  }
+
+  Future<void> _onGoogleLoginSubmitted(
+      final _, final Emitter<LoginState> emit) async {
+    try {
+      emit(state.copyWith(status: Status.loading));
+
+      await _userAuthApplicationService.loginWithGoogle();
       emit(state.copyWith(status: Status.success));
     } on Exception catch (e) {
       emit(state.copyWith(status: Status.failure));

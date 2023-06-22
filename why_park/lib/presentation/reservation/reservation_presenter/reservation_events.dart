@@ -7,4 +7,18 @@ class ReservationFieldsChangedEvent extends ReservationEvents {
   final String value;
 }
 
-class ReservationSubmitted extends ReservationEvents {}
+class ReservationSubmitted extends ReservationEvents {
+  ReservationSubmitted(this.parkId);
+
+  final String parkId;
+}
+
+class GetReservationsList extends ReservationEvents {}
+
+class GetUserVehiclesListEvent extends ReservationEvents {}
+
+class CancelReservation extends ReservationEvents {
+  CancelReservation(this.uuid);
+
+  final String uuid;
+}

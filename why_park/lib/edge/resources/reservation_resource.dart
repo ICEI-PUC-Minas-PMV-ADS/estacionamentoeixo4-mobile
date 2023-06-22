@@ -4,7 +4,17 @@ part 'reservation_resource.g.dart';
 
 @JsonSerializable()
 class ReservationResource {
-  ReservationResource(this.duration, this.hour, this.parkId, this.vehicleId, this.clientId);
+  ReservationResource(
+    this.id,
+    this.duration,
+    this.hour,
+    this.parkId,
+    this.vehicleId,
+    this.clientId,
+  );
+
+  @JsonKey(name: 'id')
+  final int id;
 
   @JsonKey(name: 'duracao')
   final int duration;
@@ -21,8 +31,8 @@ class ReservationResource {
   @JsonKey(name: 'id_cliente')
   final int clientId;
 
-  factory ReservationResource.fromJson(Map<String, dynamic> json) => _$ReservationResourceFromJson(json);
-
+  factory ReservationResource.fromJson(Map<String, dynamic> json) =>
+      _$ReservationResourceFromJson(json);
 
   Map<String, dynamic> toJson() => _$ReservationResourceToJson(this);
 }

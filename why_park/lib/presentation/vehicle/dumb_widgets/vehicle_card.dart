@@ -29,7 +29,7 @@ class VehicleCard extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(12))),
             content: Text(
               'Aqui você pode editar ou excluir o seu veículo ${_vehicleViewModel.model} de placa ${_vehicleViewModel.licensePlate}',
-              style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 20),
+              style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 20, color: Colors.black),
             ),
             actions: [
               Padding(
@@ -90,11 +90,10 @@ class VehicleCard extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                     color: Colors.deepPurple,
-                    border: Border.all(),
                     borderRadius: const BorderRadius.all(Radius.circular(20))),
                 child: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Text("Modelo: ${_vehicleViewModel.model}"),
+                  padding: const EdgeInsets.all(8),
+                  child: Text("Modelo: ${_vehicleViewModel.model}", style: TextStyle(color: Colors.white),),
                 ),
               ),
               const SizedBox(
@@ -103,11 +102,10 @@ class VehicleCard extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                     color: const Color(0xFFF27D16),
-                    border: Border.all(),
                     borderRadius: const BorderRadius.all(Radius.circular(20))),
                 child: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Text("Placa: ${_vehicleViewModel.licensePlate}"),
+                  padding: const EdgeInsets.all(8),
+                  child: Text("Placa: ${_vehicleViewModel.licensePlate}", style: TextStyle(color: Colors.white),),
                 ),
               ),
             ],

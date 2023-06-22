@@ -115,7 +115,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             bloc: widget._loginPresenter,
                             listener: (context, state) {
                               if (state.status == Status.success) {
-                                Navigator.of(context).popAndPushNamed(RoutesTable.home);
+                                Navigator.of(context)
+                                    .popAndPushNamed(RoutesTable.home);
                               } else if (state.status == Status.failure) {
                                 CustomDialog.showCustomDialog(
                                   context,

@@ -1,6 +1,8 @@
 class ReservationModel {
-  ReservationModel(
-      this.duration, this.hour, this.parkId, this.vehicleId, this.clientId);
+  ReservationModel(this.id, this.duration, this.hour, this.parkId,
+      this.vehicleId, this.clientId);
+
+  final int id;
 
   final int duration;
 

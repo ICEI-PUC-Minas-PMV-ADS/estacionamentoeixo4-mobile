@@ -16,12 +16,14 @@ class MenuDrawer extends StatefulWidget {
 
 class _MenuDrawerState extends State<MenuDrawer> {
   String _userName = '';
+  String _firstChar = '';
 
   void setUpUserName() async {
-    final name = await widget._sessionStorage.retrieveUserName() ?? '';
+    final name = await widget._sessionStorage.retrieveEmail() ?? '';
 
     setState(() {
       _userName = name;
+      _firstChar = _userName[0].toUpperCase();
     });
   }
 
@@ -46,9 +48,28 @@ class _MenuDrawerState extends State<MenuDrawer> {
             decoration: const BoxDecoration(
               color: Colors.deepPurple,
             ),
-            child: Text(
-              _userName,
-              style: const TextStyle(color: Colors.white),
+            child: Column(
+              children: [
+                Text(
+                  _userName,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                    width: 50,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    child: Center(
+                        child: Text(
+                      _firstChar,
+                      style: const TextStyle(
+                          color: Colors.deepPurple, fontSize: 32),
+                    )))
+              ],
             ),
           ),
           ListTile(

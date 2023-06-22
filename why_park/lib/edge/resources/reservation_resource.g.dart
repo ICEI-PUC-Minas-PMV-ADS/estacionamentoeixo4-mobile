@@ -8,6 +8,7 @@ part of 'reservation_resource.dart';
 
 ReservationResource _$ReservationResourceFromJson(Map<String, dynamic> json) =>
     ReservationResource(
+      json['id'] as int,
       json['duracao'] as int,
       json['horario_reserva'] as String,
       json['id_estacionamento'] as int,
@@ -18,6 +19,7 @@ ReservationResource _$ReservationResourceFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ReservationResourceToJson(
         ReservationResource instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'duracao': instance.duration,
       'horario_reserva': instance.hour,
       'id_estacionamento': instance.parkId,

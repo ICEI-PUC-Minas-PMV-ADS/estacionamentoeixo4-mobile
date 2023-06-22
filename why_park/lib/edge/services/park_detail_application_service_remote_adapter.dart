@@ -12,7 +12,7 @@ class ParkDetailApplicationServiceRemoteAdapter
 
   @override
   Future<Map<String, dynamic>> getDirections(String origin, String destination) async {
-    final String url = 'https://maps.googleapis.com/maps/api/directions/json?destination=$destination&origin=$origin&key=AIzaSyDRANEr71X4-tfM6Wua8TESB7XskoXUTgI';
+    final String url = 'https://maps.googleapis.com/maps/api/directions/json?destination=$destination&origin=$origin&key=AIzaSyBSFVff46vZk9nyEuM0GUZ4Y5lIBHq3DPU';
     final response = await http.get(Uri.parse(url));
     final json = jsonDecode(response.body);
 
@@ -26,5 +26,4 @@ class ParkDetailApplicationServiceRemoteAdapter
 
     return results;
   }
-
 }

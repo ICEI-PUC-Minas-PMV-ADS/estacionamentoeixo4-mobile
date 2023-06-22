@@ -14,7 +14,6 @@ class CustomDialog {
           ),
           content: Text(
             bodyMessage,
-            // 'Ocorreu um erro ao fazer o seu cadastro. Verifique os campos e tente novamente.',
             style: const TextStyle(color: Colors.black),
           ),
           actions: [

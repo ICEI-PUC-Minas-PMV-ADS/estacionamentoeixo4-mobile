@@ -12,3 +12,8 @@ class LoginClickedEvent extends LoginEvent {
 
   LoginClickedEvent();
 }
+
+class GoggleLoginClickedEvent extends LoginEvent {
+
+  GoggleLoginClickedEvent();
+}

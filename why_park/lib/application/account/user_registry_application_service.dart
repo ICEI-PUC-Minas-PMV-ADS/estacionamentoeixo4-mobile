@@ -4,4 +4,6 @@ abstract class UserAuthApplicationService {
   Future<void> loginWithEmailAndPassword(final UserAccountModel model);
 
   Future<void> signUpWithEmailAndPassword(final UserAccountModel model);
+
+  Future<void> loginWithGoogle();
 }

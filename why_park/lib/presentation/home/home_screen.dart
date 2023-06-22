@@ -4,17 +4,19 @@ import 'package:why_park/presentation/home/menu_drawer.dart';
 import 'package:why_park/presentation/park/park_presenter/park_presenter.dart';
 import 'package:why_park/presentation/park/park_screen.dart';
 import 'package:why_park/presentation/reservation/my_reservation_screen.dart';
+import 'package:why_park/presentation/reservation/reservation_presenter/reservation_presenter.dart';
 import 'package:why_park/presentation/vehicle/presenter/vehicle_presenter.dart';
 import 'package:why_park/presentation/vehicle/vehicle_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen(
-      this._parkPresenter, this._vehiclePresenter, this._sessionStorage,
+  const HomeScreen(this._parkPresenter, this._vehiclePresenter,
+      this._sessionStorage, this._reservationPresenter,
       [final Key? key])
       : super(key: key);
 
   final ParkPresenter _parkPresenter;
   final VehiclePresenter _vehiclePresenter;
+  final ReservationPresenter _reservationPresenter;
   final SessionStorage _sessionStorage;
 
   @override
@@ -37,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _widgetOptions = [
       ParkScreen(widget._parkPresenter),
       VehicleListScreen(widget._vehiclePresenter),
-      MyReservationsScreen(),
+      MyReservationsScreen(widget._reservationPresenter),
     ];
 
     super.initState();

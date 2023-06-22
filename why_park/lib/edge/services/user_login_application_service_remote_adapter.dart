@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:why_park/application/account/model/user_account_model.dart';
 import 'package:why_park/application/account/user_registry_application_service.dart';
 import 'package:why_park/edge/resources/user_resource.dart';
@@ -8,7 +9,8 @@ import '../http/custom_http_client.dart';
 
 class UserAuthApplicationServiceRemoteAdapter
     implements UserAuthApplicationService {
-  UserAuthApplicationServiceRemoteAdapter(this._sessionStorage, this._httpClient);
+  UserAuthApplicationServiceRemoteAdapter(
+      this._sessionStorage, this._httpClient);
 
   final SessionStorage _sessionStorage;
   final CustomHttpClient _httpClient;
@@ -22,7 +24,12 @@ class UserAuthApplicationServiceRemoteAdapter
 
       User? user = userCredential.user;
 
-      user != null ? await _sessionStorage.saveSession(user.uid) : throw Exception();
+      user != null
+          ? await _sessionStorage.saveSession(user.uid)
+          : throw Exception();
+      user.email != null
+          ? await _sessionStorage.saveEmail(user.email!)
+          : throw Exception();
     } catch (e) {
       throw Exception('loginWithEmailAndPassword.error: $e');
     }
@@ -39,14 +46,33 @@ class UserAuthApplicationServiceRemoteAdapter
 
       User? user = userCredential.user;
 
-      user?.email != null ? await _sessionStorage.saveEmail(user!.email!) : throw Exception();
+      user?.email != null
+          ? await _sessionStorage.saveEmail(user!.email!)
+          : throw Exception();
       await _sessionStorage.saveUserName(user.email!, model.name);
-      final UserResource userResource = UserResource(model.name, user.email!, '12345678910', user.uid);
+      final UserResource userResource =
+          UserResource(model.name, user.email!, '12345678910', user.uid);
 
-      final response = await _httpClient.post('/api_producer/cliente', userResource.toJson());
+      final response = await _httpClient.post(
+          '/api_producer/cliente', userResource.toJson());
       await _sessionStorage.saveClientId(response.body['id'].toString());
     } catch (e) {
       throw Exception('signUpWithEmailAndPassword.error: $e');
     }
+  }
+
+  @override
+  Future<void> loginWithGoogle() async {
+    const List<String> scopes = <String>[
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ];
+
+    GoogleSignIn _googleSignIn = GoogleSignIn(
+
+      scopes: scopes,
+    );
+
+    final googleData = await _googleSignIn.signIn();
   }
 }
