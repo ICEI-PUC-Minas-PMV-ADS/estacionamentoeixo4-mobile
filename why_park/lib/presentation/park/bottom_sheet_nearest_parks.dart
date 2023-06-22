@@ -76,7 +76,6 @@ class _BottomSheetNearestParksState extends State<BottomSheetNearestParks> {
                             padding: const EdgeInsets.all(8.0),
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.pop(context);
                                 Navigator.of(context).pushNamed(
                                   RoutesTable.parkDetail,
                                   arguments: ParkDetailScreenArguments(

@@ -84,7 +84,7 @@ class _BottomSheetParkDetailState extends State<BottomSheetParkDetail> {
                         style: const ButtonStyle(
                             backgroundColor: MaterialStatePropertyAll<Color>(
                                 Color(0xFFF27D16))),
-                        onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(RoutesTable.reservation, (route) => route.settings.name == RoutesTable.home, arguments: widget._parkViewModel),
+                        onPressed: () => Navigator.of(context).pushNamed(RoutesTable.reservation, arguments: widget._parkViewModel),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [

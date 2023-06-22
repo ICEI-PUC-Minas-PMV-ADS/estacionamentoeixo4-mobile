@@ -17,4 +17,17 @@ abstract class CustomHttpClient {
         final Map<String, dynamic> queryParams,
         final Map<String, dynamic> headers,
       ]);
+
+  Future<CustomHttpResponse> delete(
+      final String path, [
+        final Map<String, dynamic> queryParams,
+        final Map<String, dynamic> headers,
+      ]);
+
+  Future<CustomHttpResponse> patch(
+      final String path, [
+        final Object payload,
+        final Map<String, dynamic> queryParams,
+        final Map<String, dynamic> headers,
+      ]);
 }

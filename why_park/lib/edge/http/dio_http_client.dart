@@ -5,7 +5,9 @@ import 'custom_http_client.dart';
 import 'custom_http_response.dart';
 
 class DioHttpClient implements CustomHttpClient {
-  DioHttpClient({required final String urlBase, required final AuthInterceptor authInterceptor}) {
+  DioHttpClient(
+      {required final String urlBase,
+      required final AuthInterceptor authInterceptor}) {
     _dio.options = BaseOptions(
       baseUrl: urlBase,
       connectTimeout: connectTimeout,
@@ -59,4 +61,27 @@ class DioHttpClient implements CustomHttpClient {
         response.statusCode,
         response.statusMessage,
       );
+
+  @override
+  Future<CustomHttpResponse> delete(
+    String path, [
+    Map<String, dynamic>? queryParams,
+    Map<String, dynamic>? headers,
+  ]) async {
+    final Response response =
+        await _dio.delete(path, queryParameters: queryParams);
+
+    return _responseToCustomHttpResponse(response);
+  }
+
+  @override
+  Future<CustomHttpResponse> patch(String path,
+      [Object? payload,
+      Map<String, dynamic>? queryParams,
+      Map<String, dynamic>? headers]) async {
+    final Response response =
+        await _dio.patch(path, queryParameters: queryParams, data: payload);
+
+    return _responseToCustomHttpResponse(response);
+  }
 }

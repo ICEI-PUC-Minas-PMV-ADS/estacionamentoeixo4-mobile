@@ -2,7 +2,6 @@ class ReservationViewModel {
   final String id;
   final String date;
 
-  // final String vehicle;
   final String duration;
   final bool hasExpired;
 

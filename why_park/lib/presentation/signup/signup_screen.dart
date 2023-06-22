@@ -32,14 +32,12 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     final mediaQueryHeight = MediaQuery.of(context).size.height;
     final mediaQueryWidth = MediaQuery.of(context).size.width;
-    final bottom = MediaQuery.of(context).viewInsets.bottom;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: EdgeInsets.fromLTRB(31.0, 0.0, 31.0, bottom),
-        child: SingleChildScrollView(
-          reverse: true,
+        padding: const EdgeInsets.fromLTRB(31.0, 0.0, 31.0, 0.0),
+        child: Center(
           child: Column(
             children: [
               SizedBox(height: mediaQueryHeight * 0.03),
@@ -199,7 +197,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             children: [
                               const Text('Já tem uma conta?'),
                               TextButton(
-                                onPressed: () => Navigator.of(context).pop(),
+                                onPressed: () => Navigator.of(context)
+                                    .popAndPushNamed(RoutesTable.login),
                                 child: const Text(
                                   'Acesse',
                                 ),
